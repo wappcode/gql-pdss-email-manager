@@ -1,0 +1,30 @@
+{
+    "name": "codewebapp/gqlpdss-email-manager",
+    "description": "\"Modulo para administrar envíos de correos electrónicos\"",
+    "type": "library",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:jesus-abarca-g/gql-pdss-lib.git"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "GPDEmailManager\\": "GPDEmailManager/src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "JJesus Abarca"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "codewebapp/gqlpdss": "dev-master",
+        "phpmailer/phpmailer": "^6.6"
+        
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}

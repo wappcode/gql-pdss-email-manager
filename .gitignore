@@ -1,0 +1,4 @@
+*.code-workspace
+vendor/*
+*.tar.bz2
+*.zip
