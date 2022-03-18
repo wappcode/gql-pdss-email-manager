@@ -8,6 +8,10 @@ use GraphQL\Doctrine\Annotation as API;
 use Doctrine\Common\Collections\Collection;
 use GPDCore\Entities\AbstractEntityModelStringId;
 
+/**
+ * @ORM\Entity()
+ * @ORM\Table(name="gpd_email_queue")
+ */
 class EmailQueue extends AbstractEntityModelStringId
 {
 
@@ -57,9 +61,9 @@ class EmailQueue extends AbstractEntityModelStringId
     protected $message;
     /**
      * 
-     * @ORM\ManyToOne(targetEntity="\GPDEmailManager\Entities\SenderAccount", inversedBy="queue")
-     * @ROM\JoinColumn(name="sender_account_id", referencedColumnName="id", nullable=false)
-     * @var \GPDEmailManager\Entities\SenderAccount
+     * @ORM\ManyToOne(targetEntity="\GPDEmailManager\Entities\EmailSenderAccount", inversedBy="queue")
+     * @ORM\JoinColumn(name="sender_account_id", referencedColumnName="id", nullable=false)
+     * @var \GPDEmailManager\Entities\EmailSenderAccount
      */
     protected $senderAccount;
     /**
@@ -222,7 +226,7 @@ class EmailQueue extends AbstractEntityModelStringId
     /**
      * Get the value of senderAccount
      *
-     * @return  \GPDEmailManager\Entities\SenderAccount
+     * @return  \GPDEmailManager\Entities\EmailSenderAccount
      */
     public function getSenderAccount()
     {
@@ -232,11 +236,11 @@ class EmailQueue extends AbstractEntityModelStringId
     /**
      * Set the value of senderAccount
      *
-     * @param  \GPDEmailManager\Entities\SenderAccount  $senderAccount
+     * @param  \GPDEmailManager\Entities\EmailSenderAccount  $senderAccount
      *
      * @return  self
      */
-    public function setSenderAccount(\GPDEmailManager\Entities\SenderAccount $senderAccount)
+    public function setSenderAccount(\GPDEmailManager\Entities\EmailSenderAccount $senderAccount)
     {
         $this->senderAccount = $senderAccount;
 

@@ -8,6 +8,10 @@ use GPDCore\Entities\AbstractEntityModelStringId;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
 
+/**
+ * @ORM\Entity()
+ * @ORM\Table(name="gpd_email_recipient")
+ */
 class EmailRecipient extends AbstractEntityModelStringId
 {
 
@@ -26,7 +30,7 @@ class EmailRecipient extends AbstractEntityModelStringId
     protected $email;
 
     /**
-     * @ORM\Column(type="integer", name="priority" length=3, nullable=false, options={"default": 0})
+     * @ORM\Column(type="integer", name="priority", length=3, nullable=false, options={"default": 0})
      * @var int
      */
     protected $priority;

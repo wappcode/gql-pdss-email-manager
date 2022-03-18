@@ -3,8 +3,14 @@
 namespace GPDEmailManager\Entities;
 
 use GPDCore\Entities\AbstractEntityModelStringId;
+use Doctrine\ORM\Mapping as ORM;
+use GraphQL\Doctrine\Annotation as API;
 
-class SenderAccount  extends AbstractEntityModelStringId
+/**
+ * @ORM\Entity()
+ * @ORM\Table(name="gpd_email_sender_account")
+ */
+class EmailSenderAccount  extends AbstractEntityModelStringId
 {
 
     /**

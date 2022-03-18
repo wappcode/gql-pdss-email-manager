@@ -6,6 +6,10 @@ use GPDCore\Entities\AbstractEntityModelStringId;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
 
+/**
+ * @ORM\Entity()
+ * @ORM\Table(name="gpd_email_message")
+ */
 class EmailMessage extends AbstractEntityModelStringId
 {
 
