@@ -25,7 +25,7 @@ class EmailProcessQueue {
 
     public static function proccessAll(IContextService $context){
 
-        // Select account that has messages to delivery
+        // Select only the accounts with messages to delivery
         $currentDate = new DateTime();
         $entityManager = $context->getEntityManager();
         $qb = $entityManager->createQueryBuilder()->from(EmailSenderAccount::class, 'senderAccount')
@@ -49,10 +49,6 @@ class EmailProcessQueue {
 
 
     }
-
-
-
-
     public static function sendNow(IContextService $context,  EmailRecipient $recipient) {
         $account = $recipient->getQueue()->getSenderAccount();
         $totalCanSend = static::getHowManyCanSend($context, $account);
@@ -94,6 +90,23 @@ class EmailProcessQueue {
         }
 
     }
+    public static function getHowManyCanSend(IContextService $context, EmailSenderAccount $account): int{
+        $currentDate = new DateTime();
+        $startDate = $currentDate->format('Y-m-d H:00');
+        $endDate = $currentDate->format('Y-m-d H:59');
+        $entityManager = $context->getEntityManager();
+        $qb = $entityManager->createQueryBuilder()->from(EmailRecipient::class, 'recipient')
+        ->select("COUNT(recipient.id)");
+        $qb->andWhere('recipient.sent = 1')
+        ->andWhere('recipient.sendingDate BETWEEN :startDate AND :endDate')
+        ->setParameter(':startDate', $startDate)
+        ->setParameter(':endDate', $endDate);
+        $result = $qb->getQuery()->getSingleScalarResult();
+        $totalSent = intval($result);
+        $remaind = $account->getMaxDeliveriesPerHour() - $totalSent;
+
+        return max(0, $remaind);
+    }
     protected static function getAccountRecipients(IContextService $context, EmailSenderAccount $account, $limit=1) {
         $currentDate = new DateTime();
         $entityManager = $context->getEntityManager();
@@ -119,23 +132,7 @@ class EmailProcessQueue {
         return $recipients;
     }
     
-    public static function getHowManyCanSend(IContextService $context, EmailSenderAccount $account): int{
-        $currentDate = new DateTime();
-        $startDate = $currentDate->format('Y-m-d H:00');
-        $endDate = $currentDate->format('Y-m-d H:59');
-        $entityManager = $context->getEntityManager();
-        $qb = $entityManager->createQueryBuilder()->from(EmailRecipient::class, 'recipient')
-        ->select("COUNT(recipient.id)");
-        $qb->andWhere('recipient.sent = 1')
-        ->andWhere('recipient.sendingDate BETWEEN :startDate AND :endDate')
-        ->setParameter(':startDate', $startDate)
-        ->setParameter(':endDate', $endDate);
-        $result = $qb->getQuery()->getSingleScalarResult();
-        $totalSent = intval($result);
-        $remaind = $account->getMaxDeliveriesPerHour() - $totalSent;
-
-        return max(0, $remaind);
-    }
+   
    
 
     protected static function processRecipient(IContextService $context, EmailRecipient $recipient) {
