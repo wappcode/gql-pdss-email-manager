@@ -147,14 +147,21 @@ class EmailProcessQueue {
         $email = $recipient->getEmail();
         $name = $recipient->getName();
         $name = !empty($name) ? $name : '';
-        $altBody = $message->getPlainTextBody();
-        $altBody = !empty($altBody) ? $altBody : '';
+        $altBody = static::createAltBody($recipient);
         $replayTo = $queue->getReplyTo();
         $replayTo = !empty($replayTo) ?$replayTo : '';
         $replayToName = $queue->getReplyToName();
         $replayToName = !empty($replayToName) ? $replayToName  : '';
         $isProduction = $context->isProductionMode();
-        $ok = MailerService::send($config,$email, $name, $subject, $bodyHtml, $altBody, $replayTo, $replayToName, $isProduction);
+        $senderAddress = $queue->getSenderAddress();
+        $senderName = $queue->getSenderName();
+        if (empty($senderAddress)) {
+            $senderAddress = $account->getEmail();
+        }
+        if (empty($senderName)) {
+            $senderName = $account->getTitle();
+        }
+        $ok = MailerService::send($config,$email, $name, $subject, $bodyHtml, $senderAddress, $senderName, $altBody, $replayTo, $replayToName, $isProduction);
         $status = $ok ? EmailRecipient::STATUS_SENT  : EmailRecipient::STATUS_ERROR;
         $recipient->setSent(true)->setStatus($status);
         $entityManager->flush();
@@ -187,6 +194,14 @@ class EmailProcessQueue {
         $params = $recipient->getParams();
         if (empty($body)) {
             return null;
+        }
+        return static::adjustMailText($body, $params);
+    }
+    protected static function createAltBody(EmailRecipient $recipient) {
+        $body = $recipient->getQueue()->getMessage()->getPlainTextBody();
+        $params = $recipient->getParams();
+        if (empty($body)) {
+            return '';
         }
         return static::adjustMailText($body, $params);
     }

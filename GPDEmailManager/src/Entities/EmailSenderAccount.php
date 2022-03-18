@@ -24,6 +24,13 @@ class EmailSenderAccount  extends AbstractEntityModelStringId
      * @var string
      */
     protected $title;
+    /**
+     * 
+     * @ORM\Column(name="email", type="string", length=255, nullable=false)
+     *
+     * @var string
+     */
+    protected $email;
 
     /**
      * @ORM\Column(name="server", type="string", length=255, nullable=false)
@@ -113,6 +120,31 @@ class EmailSenderAccount  extends AbstractEntityModelStringId
     public function setTitle(string $title)
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+
+    /**
+     * Get title of the account it is showed to recipients
+     *
+     * @return  string
+     */ 
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set title of the account it is showed to recipients
+     *
+     * @param  string  $email  Title of the account it is showed to recipients
+     *
+     * @return  self
+     */ 
+    public function setEmail(string $email)
+    {
+        $this->email = $email;
 
         return $this;
     }
@@ -309,4 +341,6 @@ class EmailSenderAccount  extends AbstractEntityModelStringId
 
         return $this;
     }
+
+    
 }

@@ -26,6 +26,8 @@ class MailerService
         string $name,
         string $subject,
         string $bodyHtml,
+        string $senderAddress,
+        string $senderName,
         string $altBody = '',
         string $replayTo = '',
         string $replayToName = '',
@@ -41,7 +43,7 @@ class MailerService
                 $replayToName = $mailConfig["reply_to_name"];
             }
             //Recipients
-            $mail->setFrom($mailConfig['sender'], $mailConfig['sender_name']);
+            $mail->setFrom($senderAddress, $senderName);
 
             
 

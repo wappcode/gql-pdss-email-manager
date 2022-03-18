@@ -49,7 +49,7 @@ class EmailQueue extends AbstractEntityModelStringId
     /**
      * Alias or substitute for the sender email address 
      * @ORM\Column(name="sender_email_address", type="string", length=255, nullable=true)
-     * @var string
+     * @var ?string
      */
     protected $senderAddress;
     /**
@@ -154,7 +154,7 @@ class EmailQueue extends AbstractEntityModelStringId
     /**
      * Get alias or substitute for the sender email address
      *
-     * @return  string
+     * @return  ?string
      */
     public function getSenderName()
     {
@@ -168,7 +168,7 @@ class EmailQueue extends AbstractEntityModelStringId
      *
      * @return  self
      */
-    public function setSenderName(string $senderName)
+    public function setSenderName(?string $senderName)
     {
         $this->senderName = $senderName;
 
@@ -178,7 +178,7 @@ class EmailQueue extends AbstractEntityModelStringId
     /**
      * Get alias or substitute for the sender email address
      *
-     * @return  string
+     * @return  ?string
      */
     public function getSenderAddress()
     {
@@ -192,7 +192,7 @@ class EmailQueue extends AbstractEntityModelStringId
      *
      * @return  self
      */
-    public function setSenderAddress(string $senderAddress)
+    public function setSenderAddress(?string $senderAddress)
     {
         $this->senderAddress = $senderAddress;
 
