@@ -20,6 +20,7 @@ class EmailRecipient extends AbstractEntityModelStringId
     const STATUS_PAUSE = 'PAUSE';
     const STATUS_CANCELED = 'CANCELED';
     const STATUS_SENT = 'SENT';
+    const STATUS_ERROR = 'ERROR';
 
 
     /**
@@ -28,6 +29,13 @@ class EmailRecipient extends AbstractEntityModelStringId
      * @var string
      */
     protected $email;
+
+    /**
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    protected $name;
 
     /**
      * @ORM\Column(type="integer", name="priority", length=3, nullable=false, options={"default": 0})
@@ -51,11 +59,18 @@ class EmailRecipient extends AbstractEntityModelStringId
      */
     protected $sent;
     /**
-     * @ORM\Column(name="viewed", type="datetime", nullable=true )
+     * @ORM\Column(name="sending_date", type="datetime", nullable=false )
      *
      * @var DateTimeImmutable
      */
+    protected $sendingDate;
+    /**
+     * @ORM\Column(name="viewed", type="datetime", nullable=true )
+     *
+     * @var ?DateTimeImmutable
+     */
     protected $viewed;
+   
     /**
      * @ORM\ManyToOne(targetEntity="\GPDEmailManager\Entities\EmailQueue", inversedBy="recipients")
      * @ORM\JoinColumn(name="queue_id", referencedColumnName="id", nullable=false)
@@ -63,11 +78,36 @@ class EmailRecipient extends AbstractEntityModelStringId
      * @var \GPDEmailManager\Entities\EmailQueue
      */
     protected $queue;
+    
 
     public function __construct()
     {
         parent::__construct();
         $this->sent = false;
+    }
+
+    /**
+     * Get the value of name
+     *
+     * @return  ?string
+     */ 
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @param  string  $name
+     *
+     * @return  self
+     */ 
+    public function setName(?string $name)
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -166,10 +206,35 @@ class EmailRecipient extends AbstractEntityModelStringId
         return $this;
     }
 
+
+    /**
+     * Get the value of sendingDate
+     *
+     * @return  DateTimeImmutable
+     */ 
+    public function getSendingDate()
+    {
+        return $this->sendingDate;
+    }
+
+    /**
+     * Set the value of sendingDate
+     *
+     * @param  DateTimeImmutable  $sendingDate
+     *
+     * @return  self
+     */ 
+    public function setSendingDate(DateTimeImmutable $sendingDate)
+    {
+        $this->sendingDate = $sendingDate;
+
+        return $this;
+    }
+
     /**
      * Get the value of viewed
      *
-     * @return  DateTimeImmutable
+     * @return  ?DateTimeImmutable
      */
     public function getViewed()
     {
@@ -183,7 +248,7 @@ class EmailRecipient extends AbstractEntityModelStringId
      *
      * @return  self
      */
-    public function setViewed(DateTimeImmutable $viewed)
+    public function setViewed(?DateTimeImmutable $viewed)
     {
         $this->viewed = $viewed;
 
@@ -213,4 +278,7 @@ class EmailRecipient extends AbstractEntityModelStringId
 
         return $this;
     }
+
+    
+
 }

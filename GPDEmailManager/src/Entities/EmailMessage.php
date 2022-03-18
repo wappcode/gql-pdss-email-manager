@@ -13,12 +13,7 @@ use GraphQL\Doctrine\Annotation as API;
 class EmailMessage extends AbstractEntityModelStringId
 {
 
-    /**
-     * @ORM\Column(name="title", type="string", length=255, nullable=false)
-     *
-     * @var string
-     */
-    protected $title;
+  
     /**
      * @ORM\Column(name="subject", type="string", length=255, nullable=false)
      *
@@ -31,31 +26,25 @@ class EmailMessage extends AbstractEntityModelStringId
      * @var string
      */
     protected $body;
-
-
     /**
-     * Get the value of title
+     * @ORM\Column(name="plain_text_body", type="text", nullable=true)
      *
-     * @return  string
+     * @var string
      */
-    public function getTitle()
+    protected $plainTextBody;
+    /**
+     * @ORM\Column(name="chartset", type="text", nullable=false, options={"default":"UTF-8"})
+     *
+     * @var string
+     */
+    protected $chartset;
+
+
+    public function __construct()
     {
-        return $this->title;
+        $this->chartset = 'UTF-8';
     }
 
-    /**
-     * Set the value of title
-     *
-     * @param  string  $title
-     *
-     * @return  self
-     */
-    public function setTitle(string $title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
 
     /**
      * Get the value of subject
@@ -101,6 +90,54 @@ class EmailMessage extends AbstractEntityModelStringId
     public function setBody(string $body)
     {
         $this->body = $body;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of chartset
+     *
+     * @return  string
+     */ 
+    public function getChartset()
+    {
+        return $this->chartset;
+    }
+
+    /**
+     * Set the value of chartset
+     *
+     * @param  string  $chartset
+     *
+     * @return  self
+     */ 
+    public function setChartset(string $chartset)
+    {
+        $this->chartset = $chartset;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of plainTextBody
+     *
+     * @return  ?string
+     */ 
+    public function getPlainTextBody()
+    {
+        return $this->plainTextBody;
+    }
+
+    /**
+     * Set the value of plainTextBody
+     *
+     * @param  string  $plainTextBody
+     *
+     * @return  self
+     */ 
+    public function setPlainTextBody(?string $plainTextBody)
+    {
+        $this->plainTextBody = $plainTextBody;
 
         return $this;
     }

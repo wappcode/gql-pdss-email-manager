@@ -2,9 +2,12 @@
 
 namespace GPDEmailManager\Entities;
 
-use GPDCore\Entities\AbstractEntityModelStringId;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use GPDEmailManager\Library\EmialPassworEncoder;
+use GPDCore\Entities\AbstractEntityModelStringId;
 
 /**
  * @ORM\Entity()
@@ -73,9 +76,18 @@ class EmailSenderAccount  extends AbstractEntityModelStringId
     protected $maxDeliveriesPerHour;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="\GPDEmailManager\Entities\EmailQueue", mappedBy="senderAccount")
+     *
+     * @var Collection
+     */
+    protected $queues;
+
+
     public function __construct()
     {
         $this->auth = true;
+        $this->queues = new ArrayCollection();
     }
 
 
@@ -179,7 +191,7 @@ class EmailSenderAccount  extends AbstractEntityModelStringId
 
     /**
      * Get the password must be encripted
-     *
+     * @API\Exclude
      * @return  string
      */
     public function getPassword()
@@ -269,6 +281,31 @@ class EmailSenderAccount  extends AbstractEntityModelStringId
     public function setMaxDeliveriesPerHour(int $maxDeliveriesPerHour)
     {
         $this->maxDeliveriesPerHour = $maxDeliveriesPerHour;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of queues
+     *
+     * @return  Collection
+     */ 
+    public function getQueues()
+    {
+        return $this->queues;
+    }
+
+    /**
+     * Set the value of queues
+     *
+     * @API\Exclude
+     * @param  Collection  $queues
+     *
+     * @return  self
+     */ 
+    public function setQueues(Collection $queues)
+    {
+        $this->queues = $queues;
 
         return $this;
     }

@@ -37,13 +37,13 @@ class EmailQueue extends AbstractEntityModelStringId
     /**
      * Name or label for the replay address
      * @ORM\Column(name="reply_to_name", type="string", length=255, nullable=true)
-     * @var string
+     * @var ?string
      */
     protected $replyToName;
     /**
      * Alias or substitute for the sender email address 
      * @ORM\Column(name="sender_name", type="string", length=255, nullable=true)
-     * @var string
+     * @var ?string
      */
     protected $senderName;
     /**
@@ -61,7 +61,7 @@ class EmailQueue extends AbstractEntityModelStringId
     protected $message;
     /**
      * 
-     * @ORM\ManyToOne(targetEntity="\GPDEmailManager\Entities\EmailSenderAccount", inversedBy="queue")
+     * @ORM\ManyToOne(targetEntity="\GPDEmailManager\Entities\EmailSenderAccount", inversedBy="queues")
      * @ORM\JoinColumn(name="sender_account_id", referencedColumnName="id", nullable=false)
      * @var \GPDEmailManager\Entities\EmailSenderAccount
      */
@@ -106,7 +106,7 @@ class EmailQueue extends AbstractEntityModelStringId
     /**
      * Get email address to reply the message
      *
-     * @return  string
+     * @return  ?string
      */
     public function getReplyTo()
     {
@@ -116,11 +116,11 @@ class EmailQueue extends AbstractEntityModelStringId
     /**
      * Set email address to reply the message
      *
-     * @param  string  $replyTo  Email address to reply the message
+     * @param  ?string  $replyTo  Email address to reply the message
      *
      * @return  self
      */
-    public function setReplyTo(string $replyTo)
+    public function setReplyTo(?string $replyTo)
     {
         $this->replyTo = $replyTo;
 
@@ -130,7 +130,7 @@ class EmailQueue extends AbstractEntityModelStringId
     /**
      * Get name or label for the replay address
      *
-     * @return  string
+     * @return  ?string
      */
     public function getReplyToName()
     {
@@ -144,7 +144,7 @@ class EmailQueue extends AbstractEntityModelStringId
      *
      * @return  self
      */
-    public function setReplyToName(string $replyToName)
+    public function setReplyToName(?string $replyToName)
     {
         $this->replyToName = $replyToName;
 
