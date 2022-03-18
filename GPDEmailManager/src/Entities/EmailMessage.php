@@ -15,11 +15,11 @@ class EmailMessage extends AbstractEntityModelStringId
 
   
     /**
-     * @ORM\Column(name="subject", type="string", length=255, nullable=false)
+     * @ORM\Column(name="title", type="string", length=255, nullable=false)
      *
      * @var string
      */
-    protected $subject;
+    protected $title;
     /**
      * @ORM\Column(name="body", type="text", nullable=false)
      *
@@ -46,26 +46,26 @@ class EmailMessage extends AbstractEntityModelStringId
     }
 
 
-    /**
-     * Get the value of subject
+      /**
+     * Get the value of title
      *
      * @return  string
-     */
-    public function getSubject()
+     */ 
+    public function getTitle()
     {
-        return $this->subject;
+        return $this->title;
     }
 
     /**
-     * Set the value of subject
+     * Set the value of title
      *
-     * @param  string  $subject
+     * @param  string  $title
      *
      * @return  self
-     */
-    public function setSubject(string $subject)
+     */ 
+    public function setTitle(string $title)
     {
-        $this->subject = $subject;
+        $this->title = $title;
 
         return $this;
     }
@@ -141,4 +141,6 @@ class EmailMessage extends AbstractEntityModelStringId
 
         return $this;
     }
+
+  
 }

@@ -29,6 +29,12 @@ class EmailQueue extends AbstractEntityModelStringId
      */
     protected $title;
     /**
+     * @ORM\Column(name="subject", type="string", length=255, nullable=false)
+     *
+     * @var string
+     */
+    protected $subject;
+    /**
      * Email address to reply the message
      * @ORM\Column(name="reply_to", type="string", length=255, nullable=true)
      * @var string
@@ -99,6 +105,30 @@ class EmailQueue extends AbstractEntityModelStringId
     public function setTitle(string $title)
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+      /**
+     * Get the value of subject
+     *
+     * @return  string
+     */ 
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+
+    /**
+     * Set the value of subject
+     *
+     * @param  string  $subject
+     *
+     * @return  self
+     */ 
+    public function setSubject(string $subject)
+    {
+        $this->subject = $subject;
 
         return $this;
     }
@@ -270,4 +300,6 @@ class EmailQueue extends AbstractEntityModelStringId
 
         return $this;
     }
+
+  
 }

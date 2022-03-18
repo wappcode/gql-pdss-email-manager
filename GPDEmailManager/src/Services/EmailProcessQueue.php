@@ -207,7 +207,7 @@ class EmailProcessQueue {
     }
 
     protected static function  createSubject( EmailRecipient $recipient) {
-        $subject = $recipient->getQueue()->getMessage()->getSubject();
+        $subject = $recipient->getQueue()->getSubject();
         $params = $recipient->getParams();
         if (empty($subject)) {
             return null;
