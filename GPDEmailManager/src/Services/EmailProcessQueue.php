@@ -4,8 +4,9 @@
 namespace GPDEmailManager\Services;
 
 use DateTime;
-use GPDCore\Library\IContextService;
 use Exception;
+use GPDCore\Library\IContextService;
+use GPDEmailManager\Services\MailerService;
 use GPDEmailManager\Entities\EmailRecipient;
 use GPDEmailManager\Entities\EmailSenderAccount;
 use GPDEmailManager\Library\EmialPassworEncoder;
