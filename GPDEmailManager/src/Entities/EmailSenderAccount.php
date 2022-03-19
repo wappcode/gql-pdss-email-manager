@@ -55,7 +55,7 @@ class EmailSenderAccount  extends AbstractEntityModelStringId
     protected $username;
     /**
      * The password must be encripted
-     * @ORM\Column(name="password", type="string", length=1000, nullable=false)
+     * @ORM\Column(name="account_password", type="string", length=1000, nullable=false)
      *
      * @var string
      */
