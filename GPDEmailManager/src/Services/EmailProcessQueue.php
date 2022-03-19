@@ -126,6 +126,8 @@ class EmailProcessQueue {
         $qb
         ->andWhere("senderAccount.id = :senderAccountId")
         ->setParameter(":senderAccountId", $account->getId())
+        ->addOrderBy('recipient.priority','DESC')
+        ->addOrderBy('recipient.sendingDate','ASC')
         ->setMaxResults($limit);
 
         $recipients = $qb->getQuery()->getResult();
