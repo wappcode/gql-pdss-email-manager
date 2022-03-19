@@ -21,7 +21,9 @@ class EmailRecipient extends AbstractEntityModelStringId
     const STATUS_CANCELED = 'CANCELED';
     const STATUS_SENT = 'SENT';
     const STATUS_ERROR = 'ERROR';
-
+    const PRIORITY_HIGHT = 100;
+    const PRIORIRY_MEDIUM = 10;
+    const PRIORITY_LOW = 0;
 
     /**
      * @ORM\Column(name="email", type="string", length=255, nullable= false)
@@ -84,6 +86,7 @@ class EmailRecipient extends AbstractEntityModelStringId
     {
         parent::__construct();
         $this->sent = false;
+        $this->priority = static::PRIORITY_LOW;
     }
 
     /**
@@ -279,6 +282,27 @@ class EmailRecipient extends AbstractEntityModelStringId
         return $this;
     }
 
-    
+    /**
+     * Get the value of priority
+     *
+     * @return  int
+     */ 
+    public function getPriority()
+    {
+        return $this->priority;
+    }
 
+    /**
+     * Set the value of priority
+     *
+     * @param  int  $priority
+     *
+     * @return  self
+     */ 
+    public function setPriority(int $priority)
+    {
+        $this->priority = $priority;
+
+        return $this;
+    }
 }

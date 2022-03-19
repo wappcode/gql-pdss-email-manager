@@ -16,9 +16,6 @@ class EmailQueue extends AbstractEntityModelStringId
 {
 
     const RELATIONS_MANY_TO_ONE = ['message', 'senderAccount'];
-    const PRIORITY_HIGHT = 100;
-    const PRIORIRY_MEDIUM = 10;
-    const PRIORITY_LOW = 0;
 
 
 
