@@ -18,6 +18,7 @@ class EmailProcessQueue {
 
     const PARAM_DELIMITER_START = '|#';
     const PARAM_DELIMITER_END = '#|';
+    const PARAM_REPLACEMENT_PATTERN = "/\|#[a-zA-Z0-9-_\.]+#\|/";
 
     const DEFAULT_CRON_EXECUTION_PER_HOUR = 12; // Each 5 minutes
 
@@ -239,8 +240,7 @@ class EmailProcessQueue {
     }
 
     public static function removeParamsReferences(string $text) {
-        $pattern =  "^\\".static::PARAM_DELIMITER_START."[a-zA-Z0-9-_\.]"."\\". static::PARAM_DELIMITER_END."$";
-        $result = preg_replace("/{$pattern}/"," ", $text);
+        $result = preg_replace(static::PARAM_REPLACEMENT_PATTERN," ", $text);
         return $result;
     }
 
