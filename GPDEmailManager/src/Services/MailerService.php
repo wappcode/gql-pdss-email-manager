@@ -1,6 +1,6 @@
 <?php
 
-namespace EmailManager\Services;
+namespace GPDEmailManager\Services;
 
 use Exception;
 use PHPMailer\PHPMailer\SMTP;

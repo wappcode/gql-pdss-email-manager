@@ -4,11 +4,9 @@
 namespace GPDEmailManager\Services;
 
 use DateTime;
-use Doctrine\ORM\QueryBuilder;
 use GPDCore\Library\IContextService;
 use EmailManager\Services\MailerService;
 use Exception;
-use GPDEmailManager\Entities\EmailQueue;
 use GPDEmailManager\Entities\EmailRecipient;
 use GPDEmailManager\Entities\EmailSenderAccount;
 use GPDEmailManager\Library\EmialPassworEncoder;
@@ -82,7 +80,7 @@ class EmailProcessQueue {
         $recipients = static::getAccountRecipients($context, $account, $deliveriesLimit);
         $count = 0;
         foreach($recipients as $recipient) {
-            if($count >= $deliveriesLimit) {
+            if($count++ >= $deliveriesLimit) {
                 break;
             } else {
                 static::processRecipient($context, $recipient);
@@ -114,7 +112,7 @@ class EmailProcessQueue {
         ->innerJoin('recipient.queue', 'queue')
         ->innerJoin('queue.message', 'message')
         ->innerJoin('queue.senderAccount', 'senderAccount')
-        ->select(array('recipient', 'queue','message','account'));
+        ->select(array('recipient', 'queue','message','senderAccount'));
         
         // Here is where deliveries are selected
         $qb->andWhere("recipient.sent = 0")
