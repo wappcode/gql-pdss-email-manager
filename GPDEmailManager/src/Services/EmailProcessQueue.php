@@ -34,9 +34,9 @@ class EmailProcessQueue {
         ;
         $qb->andWhere("recipient.sent = 0")
         ->andWhere("recipient.status like :status")
-        ->andWhere("recipient.sendingDate >= :sendingDate")
+        ->andWhere("recipient.sendingDate <= :currentDate")
         ->setParameter(":status", EmailRecipient::STATUS_WAITING)
-        ->setParameter(":sendingDate", $currentDate->format("Y-m-d H:i"));
+        ->setParameter(":currentDate", $currentDate->format("Y-m-d H:i"));
 
         $accounts = $qb->getQuery()->getResult();
 
@@ -117,9 +117,9 @@ class EmailProcessQueue {
         // Here is where deliveries are selected
         $qb->andWhere("recipient.sent = 0")
         ->andWhere("recipient.status like :status")
-        ->andWhere("recipient.sendingDate >= :sendingDate")
+        ->andWhere("recipient.sendingDate <= :currentDate")
         ->setParameter(":status", EmailRecipient::STATUS_WAITING)
-        ->setParameter(":sendingDate", $currentDate->format("Y-m-d H:i"));
+        ->setParameter(":currentDate", $currentDate->format("Y-m-d H:i"));
 
         $qb
         ->andWhere("senderAccount.id = :senderAccountId")
