@@ -49,14 +49,13 @@ class MailerService
 
             if ($isProduction) {
                 $emailAddress = $email;
-                $mail->addAddress($email, $name);     //Add a recipient
             } else {
                 $emailAddress = $mailConfig["test_email_address"];
             }
             if (empty($emailAddress)) {
                 return false;
             }
-            $mail->addAddress($emailAddress);     //Add a recipient
+            $mail->addAddress($emailAddress, $name);     //Add a recipient
             
             if (!empty($replayTo)) {
                 $mail->addReplyTo($replayTo, $replayToName);
