@@ -5,7 +5,6 @@ namespace GPDEmailManager\Services;
 
 use DateTime;
 use GPDCore\Library\IContextService;
-use EmailManager\Services\MailerService;
 use Exception;
 use GPDEmailManager\Entities\EmailRecipient;
 use GPDEmailManager\Entities\EmailSenderAccount;
@@ -239,8 +238,8 @@ class EmailProcessQueue {
     }
 
     public static function removeParamsReferences(string $text) {
-        $pattern =  static::PARAM_DELIMITER_START."[a-zA-Z0-9-_\.]". static::PARAM_DELIMITER_END;
-        $result = preg_replace("/{$pattern}/g"," ", $text);
+        $pattern =  "^\\".static::PARAM_DELIMITER_START."[a-zA-Z0-9-_\.]"."\\". static::PARAM_DELIMITER_END."$";
+        $result = preg_replace("/{$pattern}/"," ", $text);
         return $result;
     }
 
