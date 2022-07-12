@@ -279,7 +279,7 @@ class EmailQueue extends AbstractEntityModelStringId
      *
      * @return  Collection
      */
-    public function getRecipients()
+    public function getRecipients(): Collection
     {
         return $this->recipients;
     }
