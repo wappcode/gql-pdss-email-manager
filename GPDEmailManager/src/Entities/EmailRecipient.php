@@ -3,7 +3,6 @@
 namespace GPDEmailManager\Entities;
 
 use DateTimeImmutable;
-use Doctrine\Common\Collections\Collection;
 use GPDCore\Entities\AbstractEntityModelStringId;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
@@ -72,7 +71,7 @@ class EmailRecipient extends AbstractEntityModelStringId
      * @var ?DateTimeImmutable
      */
     protected $viewed;
-   
+
     /**
      * @ORM\ManyToOne(targetEntity="\GPDEmailManager\Entities\EmailQueue", inversedBy="recipients")
      * @ORM\JoinColumn(name="queue_id", referencedColumnName="id", nullable=false)
@@ -80,7 +79,7 @@ class EmailRecipient extends AbstractEntityModelStringId
      * @var \GPDEmailManager\Entities\EmailQueue
      */
     protected $queue;
-    
+
 
     public function __construct()
     {
@@ -93,7 +92,7 @@ class EmailRecipient extends AbstractEntityModelStringId
      * Get the value of name
      *
      * @return  ?string
-     */ 
+     */
     public function getName()
     {
         return $this->name;
@@ -105,7 +104,7 @@ class EmailRecipient extends AbstractEntityModelStringId
      * @param  string  $name
      *
      * @return  self
-     */ 
+     */
     public function setName(?string $name)
     {
         $this->name = $name;
@@ -139,22 +138,22 @@ class EmailRecipient extends AbstractEntityModelStringId
 
     /**
      * Get the value of params
-     *
+     * @API\Field(type="?GPDEmailManager\Graphql\TypeEmailRecipientParams")
      * @return  array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return $this->params;
     }
 
     /**
      * Set the value of params
-     *
+     * @API\Input(type="?GPDEmailManager\Graphql\TypeEmailRecipientParams")
      * @param  array  $params
      *
      * @return  self
      */
-    public function setParams(array $params)
+    public function setParams(?array $params)
     {
         $this->params = $params;
 
@@ -214,7 +213,7 @@ class EmailRecipient extends AbstractEntityModelStringId
      * Get the value of sendingDate
      *
      * @return  DateTimeImmutable
-     */ 
+     */
     public function getSendingDate()
     {
         return $this->sendingDate;
@@ -226,7 +225,7 @@ class EmailRecipient extends AbstractEntityModelStringId
      * @param  DateTimeImmutable  $sendingDate
      *
      * @return  self
-     */ 
+     */
     public function setSendingDate(DateTimeImmutable $sendingDate)
     {
         $this->sendingDate = $sendingDate;
@@ -286,7 +285,7 @@ class EmailRecipient extends AbstractEntityModelStringId
      * Get the value of priority
      *
      * @return  int
-     */ 
+     */
     public function getPriority()
     {
         return $this->priority;
@@ -298,7 +297,7 @@ class EmailRecipient extends AbstractEntityModelStringId
      * @param  int  $priority
      *
      * @return  self
-     */ 
+     */
     public function setPriority(int $priority)
     {
         $this->priority = $priority;

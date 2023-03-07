@@ -106,11 +106,11 @@ class EmailQueue extends AbstractEntityModelStringId
         return $this;
     }
 
-      /**
+    /**
      * Get the value of subject
      *
      * @return  string
-     */ 
+     */
     public function getSubject()
     {
         return $this->subject;
@@ -122,7 +122,7 @@ class EmailQueue extends AbstractEntityModelStringId
      * @param  string  $subject
      *
      * @return  self
-     */ 
+     */
     public function setSubject(string $subject)
     {
         $this->subject = $subject;
@@ -287,6 +287,7 @@ class EmailQueue extends AbstractEntityModelStringId
     /**
      * Set the value of recipients
      *
+     * @API\Exclude()
      * @param  Collection  $recipients
      *
      * @return  self
@@ -297,6 +298,4 @@ class EmailQueue extends AbstractEntityModelStringId
 
         return $this;
     }
-
-  
 }

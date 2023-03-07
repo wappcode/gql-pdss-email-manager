@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use GPDEmailManager\Library\EmialPassworEncoder;
 use GPDCore\Entities\AbstractEntityModelStringId;
 
 /**
@@ -16,6 +15,7 @@ use GPDCore\Entities\AbstractEntityModelStringId;
 class EmailSenderAccount  extends AbstractEntityModelStringId
 {
 
+    const RELATIONS_MANY_TO_ONE = [];
     /**
      * 
      * Title of the account it is showed to recipients
@@ -129,7 +129,7 @@ class EmailSenderAccount  extends AbstractEntityModelStringId
      * Get title of the account it is showed to recipients
      *
      * @return  string
-     */ 
+     */
     public function getEmail()
     {
         return $this->email;
@@ -141,7 +141,7 @@ class EmailSenderAccount  extends AbstractEntityModelStringId
      * @param  string  $email  Title of the account it is showed to recipients
      *
      * @return  self
-     */ 
+     */
     public function setEmail(string $email)
     {
         $this->email = $email;
@@ -319,9 +319,9 @@ class EmailSenderAccount  extends AbstractEntityModelStringId
 
     /**
      * Get the value of queues
-     *
+     * @API\Exclude
      * @return  Collection
-     */ 
+     */
     public function getQueues()
     {
         return $this->queues;
@@ -334,13 +334,11 @@ class EmailSenderAccount  extends AbstractEntityModelStringId
      * @param  Collection  $queues
      *
      * @return  self
-     */ 
+     */
     public function setQueues(Collection $queues)
     {
         $this->queues = $queues;
 
         return $this;
     }
-
-    
 }

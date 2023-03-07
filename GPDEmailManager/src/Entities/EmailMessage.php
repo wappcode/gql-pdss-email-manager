@@ -13,7 +13,8 @@ use GraphQL\Doctrine\Annotation as API;
 class EmailMessage extends AbstractEntityModelStringId
 {
 
-  
+    const RELATIONS_MANY_TO_ONE = [];
+
     /**
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
      *
@@ -46,11 +47,11 @@ class EmailMessage extends AbstractEntityModelStringId
     }
 
 
-      /**
+    /**
      * Get the value of title
      *
      * @return  string
-     */ 
+     */
     public function getTitle()
     {
         return $this->title;
@@ -62,7 +63,7 @@ class EmailMessage extends AbstractEntityModelStringId
      * @param  string  $title
      *
      * @return  self
-     */ 
+     */
     public function setTitle(string $title)
     {
         $this->title = $title;
@@ -98,7 +99,7 @@ class EmailMessage extends AbstractEntityModelStringId
      * Get the value of chartset
      *
      * @return  string
-     */ 
+     */
     public function getChartset()
     {
         return $this->chartset;
@@ -110,7 +111,7 @@ class EmailMessage extends AbstractEntityModelStringId
      * @param  string  $chartset
      *
      * @return  self
-     */ 
+     */
     public function setChartset(string $chartset)
     {
         $this->chartset = $chartset;
@@ -122,7 +123,7 @@ class EmailMessage extends AbstractEntityModelStringId
      * Get the value of plainTextBody
      *
      * @return  ?string
-     */ 
+     */
     public function getPlainTextBody()
     {
         return $this->plainTextBody;
@@ -134,13 +135,11 @@ class EmailMessage extends AbstractEntityModelStringId
      * @param  string  $plainTextBody
      *
      * @return  self
-     */ 
+     */
     public function setPlainTextBody(?string $plainTextBody)
     {
         $this->plainTextBody = $plainTextBody;
 
         return $this;
     }
-
-  
 }
