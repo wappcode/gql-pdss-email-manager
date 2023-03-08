@@ -2,3 +2,5 @@
 vendor/*
 *.tar.bz2
 *.zip
+dev/data/*
+!dev/data/.gitkeep
