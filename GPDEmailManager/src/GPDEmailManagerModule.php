@@ -20,6 +20,8 @@ use GPDEmailManager\Graphql\TypeEmailRecipientStatus;
 use GPDEmailManager\Graphql\TypeEmailMessageConnection;
 use GPDEmailManager\Graphql\TypeEmailSenderAccountEdge;
 use GPDEmailManager\Graphql\TypeEmailRecipientConnection;
+use GPDEmailManager\Graphql\TypeEmailSenderAccountSecure;
+use GPDEmailManager\Graphql\TypeEmailSenderAccountPassword;
 use GPDEmailManager\Graphql\TypeEmailSenderAccountConnection;
 
 class GPDEmailManagerModule extends AbstractModule
@@ -42,6 +44,7 @@ class GPDEmailManagerModule extends AbstractModule
             'invokables' => [
                 TypeEmailRecipientParams::class => TypeEmailRecipientParams::class,
                 TypeEmailRecipientStatus::class => TypeEmailRecipientStatus::class,
+                TypeEmailSenderAccountSecure::class => TypeEmailSenderAccountSecure::class,
             ],
             'factories' => [
                 TypeEmailMessageEdge::class => TypeEmailMessageEdge::getFactory($this->context, EmailMessage::class),
@@ -52,6 +55,9 @@ class GPDEmailManagerModule extends AbstractModule
                 TypeEmailRecipientConnection::class => TypeEmailRecipientConnection::getFactory($this->context, TypeEmailRecipientEdge::class),
                 TypeEmailSenderAccountEdge::class => TypeEmailSenderAccountEdge::getFactory($this->context, EmailSenderAccount::class),
                 TypeEmailSenderAccountConnection::class => TypeEmailSenderAccountConnection::getFactory($this->context, TypeEmailSenderAccountEdge::class),
+                TypeEmailSenderAccountPassword::class => function ($sm) {
+                    return new TypeEmailSenderAccountPassword($this->context);
+                }
             ],
             'aliases' => [
                 TypeEmailMessageEdge::NAME => TypeEmailMessageEdge::class,
@@ -64,6 +70,8 @@ class GPDEmailManagerModule extends AbstractModule
                 TypeEmailSenderAccountConnection::NAME => TypeEmailSenderAccountConnection::class,
                 TypeEmailRecipientParams::NAME => TypeEmailRecipientParams::class,
                 TypeEmailRecipientStatus::NAME => TypeEmailRecipientStatus::class,
+                TypeEmailSenderAccountPassword::NAME => TypeEmailSenderAccountPassword::class,
+                TypeEmailSenderAccountSecure::NAME => TypeEmailSenderAccountSecure::class,
             ]
         ];
     }

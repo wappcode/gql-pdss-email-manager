@@ -7,6 +7,7 @@ use GraphQL\Doctrine\Annotation as API;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use GPDCore\Entities\AbstractEntityModelStringId;
+use PHPMailer\PHPMailer\PHPMailer;
 
 /**
  * @ORM\Entity()
@@ -235,6 +236,7 @@ class EmailSenderAccount  extends AbstractEntityModelStringId
     /**
      * Set the password must be encripted
      *
+     * @API\Input(type="GPDEmailManager\Graphql\TypeEmailSenderAccountPassword")
      * @param  string  $password  The password must be encripted
      *
      * @return  self
@@ -259,11 +261,12 @@ class EmailSenderAccount  extends AbstractEntityModelStringId
     /**
      * Set values can be PHPMailer::ENCRYPTION_SMTPS (ssl) or PHPMailer::ENCRYPTION_STARTTLS(tls)
      *
+     * @API\Input(type="GPDEmailManager\Graphql\TypeEmailSenderAccountSecure")
      * @param  string  $secure  Values can be PHPMailer::ENCRYPTION_SMTPS (ssl) or PHPMailer::ENCRYPTION_STARTTLS(tls)
      *
      * @return  self
      */
-    public function setSecure(string $secure)
+    public function setSecure(string $secure = PHPMailer::ENCRYPTION_SMTPS)
     {
         $this->secure = $secure;
 
@@ -287,7 +290,7 @@ class EmailSenderAccount  extends AbstractEntityModelStringId
      *
      * @return  self
      */
-    public function setPort(int $port)
+    public function setPort(int $port = 465)
     {
         $this->port = $port;
 
