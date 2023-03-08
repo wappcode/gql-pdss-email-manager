@@ -19,7 +19,6 @@ class TypeEmailRecipientStatus extends EnumType
                 EmailRecipient::STATUS_WAITING,
                 EmailRecipient::STATUS_CANCELED,
                 EmailRecipient::STATUS_ERROR,
-                EmailRecipient::STATUS_PAUSE,
                 EmailRecipient::STATUS_SENT,
             ],
         ];

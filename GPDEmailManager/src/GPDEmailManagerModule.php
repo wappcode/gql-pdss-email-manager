@@ -10,6 +10,9 @@ use GPDEmailManager\Entities\EmailRecipient;
 use GPDEmailManager\Graphql\FieldCreateQueue;
 use GPDEmailManager\Graphql\TypeEmailQueueEdge;
 use GPDEmailManager\Entities\EmailSenderAccount;
+use GPDEmailManager\Graphql\FieldCancelQueue;
+use GPDEmailManager\Graphql\FieldPauseQueue;
+use GPDEmailManager\Graphql\FieldResumeQueue;
 use GPDEmailManager\Graphql\ResolversEmailQueue;
 use GPDEmailManager\Graphql\TypeEmailMessageEdge;
 use GPDEmailManager\Graphql\TypeEmailRecipientEdge;
@@ -106,18 +109,21 @@ class GPDEmailManagerModule extends AbstractModule
     function getMutationFields(): array
     {
         return [
-            'createEmailMessage' => GPDFieldFactory::buildFieldCreate($this->context, EmailMessage::class, EmailMessage::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'updateEmailMessage' => GPDFieldFactory::buildFieldUpdate($this->context, EmailMessage::class, EmailMessage::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'deleteEmailMessage' => GPDFieldFactory::buildFieldDelete($this->context, EmailMessage::class, EmailMessage::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'createEmailQueue' => FieldCreateQueue::get($this->context, $this->defaultProxy),
-            'updateEmailQueue' => GPDFieldFactory::buildFieldUpdate($this->context, EmailQueue::class, EmailQueue::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'deleteEmailQueue' => GPDFieldFactory::buildFieldDelete($this->context, EmailQueue::class, EmailQueue::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'createEmailRecipient' => GPDFieldFactory::buildFieldCreate($this->context, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'updateEmailRecipient' => GPDFieldFactory::buildFieldUpdate($this->context, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'deleteEmailRecipient' => GPDFieldFactory::buildFieldDelete($this->context, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'createEmailSenderAccount' => GPDFieldFactory::buildFieldCreate($this->context, EmailSenderAccount::class, EmailSenderAccount::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'updateEmailSenderAccount' => GPDFieldFactory::buildFieldUpdate($this->context, EmailSenderAccount::class, EmailSenderAccount::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'deleteEmailSenderAccount' => GPDFieldFactory::buildFieldDelete($this->context, EmailSenderAccount::class, EmailSenderAccount::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'createEmailMessage'        => GPDFieldFactory::buildFieldCreate($this->context, EmailMessage::class, EmailMessage::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'updateEmailMessage'        => GPDFieldFactory::buildFieldUpdate($this->context, EmailMessage::class, EmailMessage::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'deleteEmailMessage'        => GPDFieldFactory::buildFieldDelete($this->context, EmailMessage::class, EmailMessage::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'createEmailQueue'          => FieldCreateQueue::get($this->context, $this->defaultProxy),
+            'updateEmailQueue'          => GPDFieldFactory::buildFieldUpdate($this->context, EmailQueue::class, EmailQueue::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'deleteEmailQueue'          => GPDFieldFactory::buildFieldDelete($this->context, EmailQueue::class, EmailQueue::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'cancelEmailQueue'          => FieldCancelQueue::get($this->context, $this->defaultProxy),
+            'resumeEmailQueue'          => FieldResumeQueue::get($this->context, $this->defaultProxy),
+            'pauseEmailQueue'           => FieldPauseQueue::get($this->context, $this->defaultProxy),
+            'createEmailRecipient'      => GPDFieldFactory::buildFieldCreate($this->context, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'updateEmailRecipient'      => GPDFieldFactory::buildFieldUpdate($this->context, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'deleteEmailRecipient'      => GPDFieldFactory::buildFieldDelete($this->context, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'createEmailSenderAccount'  => GPDFieldFactory::buildFieldCreate($this->context, EmailSenderAccount::class, EmailSenderAccount::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'updateEmailSenderAccount'  => GPDFieldFactory::buildFieldUpdate($this->context, EmailSenderAccount::class, EmailSenderAccount::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'deleteEmailSenderAccount'  => GPDFieldFactory::buildFieldDelete($this->context, EmailSenderAccount::class, EmailSenderAccount::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
         ];
     }
 }
