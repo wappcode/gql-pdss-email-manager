@@ -287,7 +287,7 @@ class EmailQueue extends AbstractEntityModelStringId
     /**
      * Set the value of recipients
      *
-     * @API\Exclude()
+     * @API\Input(type="?EmailRecipientInput[]")
      * @param  Collection  $recipients
      *
      * @return  self

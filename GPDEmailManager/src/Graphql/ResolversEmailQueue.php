@@ -7,6 +7,8 @@ namespace GPDEmailManager\Graphql;
 use GPDCore\Library\EntityBuffer;
 use GPDCore\Library\ResolverFactory;
 use GPDEmailManager\Entities\EmailMessage;
+use GPDEmailManager\Entities\EmailQueue;
+use GPDEmailManager\Entities\EmailRecipient;
 use GPDEmailManager\Entities\EmailSenderAccount;
 
 class ResolversEmailQueue
@@ -22,6 +24,11 @@ class ResolversEmailQueue
     {
         $entityBufer = new EntityBuffer(EmailSenderAccount::class, EmailSenderAccount::RELATIONS_MANY_TO_ONE);
         $resolver = ResolverFactory::createEntityResolver($entityBufer, 'senderAccount');
+        return is_callable($proxy) ? $proxy($resolver) : $resolver;
+    }
+    public static function getRecipientsResolver(?callable $proxy): callable
+    {
+        $resolver = ResolverFactory::createCollectionResolver(EmailQueue::class, 'recipients', EmailRecipient::RELATIONS_MANY_TO_ONE);
         return is_callable($proxy) ? $proxy($resolver) : $resolver;
     }
 }

@@ -2776,16 +2776,16 @@
         },
         {
             "name": "wappcode/gqlpdss",
-            "version": "2.0.12",
+            "version": "2.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wappcode/gql-pdss-lib.git",
-                "reference": "1a823c19bd4750ffbd3dad0ff7624aca3de7e469"
+                "reference": "1091f158e8eb42f8d792a96b2399ab605cad82c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wappcode/gql-pdss-lib/zipball/1a823c19bd4750ffbd3dad0ff7624aca3de7e469",
-                "reference": "1a823c19bd4750ffbd3dad0ff7624aca3de7e469",
+                "url": "https://api.github.com/repos/wappcode/gql-pdss-lib/zipball/1091f158e8eb42f8d792a96b2399ab605cad82c4",
+                "reference": "1091f158e8eb42f8d792a96b2399ab605cad82c4",
                 "shasum": ""
             },
             "require": {
@@ -2821,9 +2821,9 @@
             "description": "Utilidades para crear una api GraphQL",
             "support": {
                 "issues": "https://github.com/wappcode/gql-pdss-lib/issues",
-                "source": "https://github.com/wappcode/gql-pdss-lib/tree/2.0.12"
+                "source": "https://github.com/wappcode/gql-pdss-lib/tree/2.0.14"
             },
-            "time": "2022-11-01T00:21:20+00:00"
+            "time": "2023-03-08T00:38:03+00:00"
         },
         {
             "name": "wappcode/pdss-utilities",

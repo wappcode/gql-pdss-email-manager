@@ -43,6 +43,7 @@ class EmailMessage extends AbstractEntityModelStringId
 
     public function __construct()
     {
+        parent::__construct();
         $this->chartset = 'UTF-8';
     }
 
@@ -112,7 +113,7 @@ class EmailMessage extends AbstractEntityModelStringId
      *
      * @return  self
      */
-    public function setChartset(string $chartset)
+    public function setChartset(string $chartset = 'UTF-8')
     {
         $this->chartset = $chartset;
 

@@ -171,8 +171,10 @@ class EmailRecipient extends AbstractEntityModelStringId
     }
 
     /**
-     * Set the value of status
+     * 
      *
+     * 
+     * @API\Input(type="GPDEmailManager\Graphql\TypeEmailRecipientStatus")
      * @param  string  $status
      *
      * @return  self
@@ -197,6 +199,7 @@ class EmailRecipient extends AbstractEntityModelStringId
     /**
      * Set the value of sent
      *
+     * @API\Exclude()
      * @param  bool  $sent
      *
      * @return  self
@@ -220,7 +223,7 @@ class EmailRecipient extends AbstractEntityModelStringId
     }
 
     /**
-     * Set the value of sendingDate
+     * Date after which the message can be process
      *
      * @param  DateTimeImmutable  $sendingDate
      *
@@ -245,7 +248,7 @@ class EmailRecipient extends AbstractEntityModelStringId
 
     /**
      * Set the value of viewed
-     *
+     * @API\Exclude()
      * @param  DateTimeImmutable  $viewed
      *
      * @return  self
@@ -270,6 +273,7 @@ class EmailRecipient extends AbstractEntityModelStringId
     /**
      * Set the value of queue
      *
+     * * @API\Input(type="?id")
      * @param  \GPDEmailManager\Entities\EmailQueue  $queue
      *
      * @return  self
@@ -292,7 +296,7 @@ class EmailRecipient extends AbstractEntityModelStringId
     }
 
     /**
-     * Set the value of priority
+     * Sets the value of the property PRIORITY_HIGHT = 100, PRIORIRY_MEDIUM = 10 ,PRIORITY_LOW = 0
      *
      * @param  int  $priority
      *

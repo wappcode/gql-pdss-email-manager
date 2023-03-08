@@ -93,6 +93,7 @@ class EmailSenderAccount  extends AbstractEntityModelStringId
 
     public function __construct()
     {
+        parent::__construct();
         $this->auth = true;
         $this->queues = new ArrayCollection();
     }

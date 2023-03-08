@@ -7,6 +7,7 @@ use GPDCore\Graphql\GPDFieldFactory;
 use GPDEmailManager\Entities\EmailQueue;
 use GPDEmailManager\Entities\EmailMessage;
 use GPDEmailManager\Entities\EmailRecipient;
+use GPDEmailManager\Graphql\FieldCreateQueue;
 use GPDEmailManager\Graphql\TypeEmailQueueEdge;
 use GPDEmailManager\Entities\EmailSenderAccount;
 use GPDEmailManager\Graphql\ResolversEmailQueue;
@@ -15,6 +16,7 @@ use GPDEmailManager\Graphql\TypeEmailRecipientEdge;
 use GPDEmailManager\Graphql\ResolversEmailRecipient;
 use GPDEmailManager\Graphql\TypeEmailQueueConnection;
 use GPDEmailManager\Graphql\TypeEmailRecipientParams;
+use GPDEmailManager\Graphql\TypeEmailRecipientStatus;
 use GPDEmailManager\Graphql\TypeEmailMessageConnection;
 use GPDEmailManager\Graphql\TypeEmailSenderAccountEdge;
 use GPDEmailManager\Graphql\TypeEmailRecipientConnection;
@@ -38,7 +40,8 @@ class GPDEmailManagerModule extends AbstractModule
     {
         return [
             'invokables' => [
-                TypeEmailRecipientParams::class => TypeEmailRecipientParams::class
+                TypeEmailRecipientParams::class => TypeEmailRecipientParams::class,
+                TypeEmailRecipientStatus::class => TypeEmailRecipientStatus::class,
             ],
             'factories' => [
                 TypeEmailMessageEdge::class => TypeEmailMessageEdge::getFactory($this->context, EmailMessage::class),
@@ -59,7 +62,8 @@ class GPDEmailManagerModule extends AbstractModule
                 TypeEmailRecipientConnection::NAME => TypeEmailRecipientConnection::class,
                 TypeEmailSenderAccountEdge::NAME => TypeEmailSenderAccountEdge::class,
                 TypeEmailSenderAccountConnection::NAME => TypeEmailSenderAccountConnection::class,
-                TypeEmailRecipientParams::NAME => TypeEmailRecipientParams::class
+                TypeEmailRecipientParams::NAME => TypeEmailRecipientParams::class,
+                TypeEmailRecipientStatus::NAME => TypeEmailRecipientStatus::class,
             ]
         ];
     }
@@ -68,6 +72,7 @@ class GPDEmailManagerModule extends AbstractModule
         return [
             'EmailQueue::message' => ResolversEmailQueue::getMessageResolver($proxy = null),
             'EmailQueue::senderAccount' => ResolversEmailQueue::getMessageResolver($proxy = null),
+            'EmailQueue::recipients' => ResolversEmailQueue::getRecipientsResolver($proxy = null),
             'EmailRecipient::queue' => ResolversEmailRecipient::getQueueResolver($proxy = null),
         ];
     }
@@ -96,7 +101,7 @@ class GPDEmailManagerModule extends AbstractModule
             'createEmailMessage' => GPDFieldFactory::buildFieldCreate($this->context, EmailMessage::class, EmailMessage::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
             'updateEmailMessage' => GPDFieldFactory::buildFieldUpdate($this->context, EmailMessage::class, EmailMessage::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
             'deleteEmailMessage' => GPDFieldFactory::buildFieldDelete($this->context, EmailMessage::class, EmailMessage::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'createEmailQueue' => GPDFieldFactory::buildFieldCreate($this->context, EmailQueue::class, EmailQueue::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'createEmailQueue' => FieldCreateQueue::get($this->context, $this->defaultProxy),
             'updateEmailQueue' => GPDFieldFactory::buildFieldUpdate($this->context, EmailQueue::class, EmailQueue::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
             'deleteEmailQueue' => GPDFieldFactory::buildFieldDelete($this->context, EmailQueue::class, EmailQueue::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
             'createEmailRecipient' => GPDFieldFactory::buildFieldCreate($this->context, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
