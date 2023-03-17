@@ -9,7 +9,9 @@ use GraphQL\Doctrine\Annotation as API;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="gpd_email_recipient")
+ * @ORM\Table(name="gpd_email_recipient", uniqueConstraints={
+ * @ORM\UniqueConstraint(name="owner_code", columns={"queue_id","owner_code"})
+ * })
  */
 class EmailRecipient extends AbstractEntityModelStringId
 {
@@ -71,6 +73,14 @@ class EmailRecipient extends AbstractEntityModelStringId
      * @var ?DateTimeImmutable
      */
     protected $viewed;
+
+    /**
+     * Extern reference to the owner 
+     * 
+     * @ORM\Column(type="string", length=500, name="owner_code", nullable=true) 
+     * @var ?string
+     */
+    private $ownerCode;
 
     /**
      * @ORM\ManyToOne(targetEntity="\GPDEmailManager\Entities\EmailQueue", inversedBy="recipients")
@@ -305,6 +315,30 @@ class EmailRecipient extends AbstractEntityModelStringId
     public function setPriority(int $priority)
     {
         $this->priority = $priority;
+
+        return $this;
+    }
+
+        /**
+     * Get the extern reference to the owner 
+     *
+     * @return  ?string
+     */
+    public function getOwnerCode()
+    {
+        return $this->ownerCode;
+    }
+
+    /**
+     * Set the extern reference to the owner 
+     *
+     * @param  string  $ownerCode
+     *
+     * @return  self
+     */
+    public function setOwnerCode(?string $ownerCode)
+    {
+        $this->ownerCode = $ownerCode;
 
         return $this;
     }
