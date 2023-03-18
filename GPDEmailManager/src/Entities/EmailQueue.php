@@ -167,7 +167,7 @@ class EmailQueue extends AbstractEntityModelStringId
     /**
      * Set name or label for the replay address
      *
-     * @param  string  $replyToName  Name or label for the replay address
+     * @param  ?string  $replyToName  Name or label for the replay address
      *
      * @return  self
      */
@@ -191,7 +191,7 @@ class EmailQueue extends AbstractEntityModelStringId
     /**
      * Set alias or substitute for the sender email address
      *
-     * @param  string  $senderName  Alias or substitute for the sender email address
+     * @param  ?string  $senderName  Alias or substitute for the sender email address
      *
      * @return  self
      */
@@ -215,7 +215,7 @@ class EmailQueue extends AbstractEntityModelStringId
     /**
      * Set alias or substitute for the sender email address
      *
-     * @param  string  $senderAddress  Alias or substitute for the sender email address
+     * @param  ?string  $senderAddress  Alias or substitute for the sender email address
      *
      * @return  self
      */
@@ -287,7 +287,7 @@ class EmailQueue extends AbstractEntityModelStringId
     /**
      * Set the value of recipients
      *
-     * @API\Input(type="?EmailRecipientInput[]")
+     * @API\Input(type="?CreateEmailQueueRecipientsInput[]")
      * @param  Collection  $recipients
      *
      * @return  self

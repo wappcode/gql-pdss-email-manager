@@ -7,12 +7,12 @@ use GPDCore\Graphql\GPDFieldFactory;
 use GPDEmailManager\Entities\EmailQueue;
 use GPDEmailManager\Entities\EmailMessage;
 use GPDEmailManager\Entities\EmailRecipient;
+use GPDEmailManager\Graphql\FieldPauseQueue;
+use GPDEmailManager\Graphql\FieldCancelQueue;
 use GPDEmailManager\Graphql\FieldCreateQueue;
+use GPDEmailManager\Graphql\FieldResumeQueue;
 use GPDEmailManager\Graphql\TypeEmailQueueEdge;
 use GPDEmailManager\Entities\EmailSenderAccount;
-use GPDEmailManager\Graphql\FieldCancelQueue;
-use GPDEmailManager\Graphql\FieldPauseQueue;
-use GPDEmailManager\Graphql\FieldResumeQueue;
 use GPDEmailManager\Graphql\ResolversEmailQueue;
 use GPDEmailManager\Graphql\TypeEmailMessageEdge;
 use GPDEmailManager\Graphql\TypeEmailRecipientEdge;
@@ -24,6 +24,7 @@ use GPDEmailManager\Graphql\TypeEmailMessageConnection;
 use GPDEmailManager\Graphql\TypeEmailSenderAccountEdge;
 use GPDEmailManager\Graphql\TypeEmailRecipientConnection;
 use GPDEmailManager\Graphql\TypeEmailSenderAccountSecure;
+use GPDEmailManager\Graphql\TypeEmailQueueRecipientsInput;
 use GPDEmailManager\Graphql\TypeEmailSenderAccountPassword;
 use GPDEmailManager\Graphql\TypeEmailSenderAccountConnection;
 
@@ -60,6 +61,9 @@ class GPDEmailManagerModule extends AbstractModule
                 TypeEmailSenderAccountConnection::class => TypeEmailSenderAccountConnection::getFactory($this->context, TypeEmailSenderAccountEdge::class),
                 TypeEmailSenderAccountPassword::class => function ($sm) {
                     return new TypeEmailSenderAccountPassword($this->context);
+                },
+                TypeEmailQueueRecipientsInput::class => function ($sm) {
+                    return new TypeEmailQueueRecipientsInput($this->context);
                 }
             ],
             'aliases' => [
@@ -75,6 +79,7 @@ class GPDEmailManagerModule extends AbstractModule
                 TypeEmailRecipientStatus::NAME => TypeEmailRecipientStatus::class,
                 TypeEmailSenderAccountPassword::NAME => TypeEmailSenderAccountPassword::class,
                 TypeEmailSenderAccountSecure::NAME => TypeEmailSenderAccountSecure::class,
+                TypeEmailQueueRecipientsInput::NAME => TypeEmailQueueRecipientsInput::class,
             ]
         ];
     }

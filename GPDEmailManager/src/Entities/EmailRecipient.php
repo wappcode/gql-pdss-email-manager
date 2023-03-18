@@ -3,9 +3,10 @@
 namespace GPDEmailManager\Entities;
 
 use DateTimeImmutable;
-use GPDCore\Entities\AbstractEntityModelStringId;
 use Doctrine\ORM\Mapping as ORM;
 use GraphQL\Doctrine\Annotation as API;
+use GPDEmailManager\Entities\EmailQueue;
+use GPDCore\Entities\AbstractEntityModelStringId;
 
 /**
  * @ORM\Entity()
@@ -96,6 +97,7 @@ class EmailRecipient extends AbstractEntityModelStringId
         parent::__construct();
         $this->sent = false;
         $this->priority = static::PRIORITY_LOW;
+        $this->status = static::STATUS_WAITING;
     }
 
     /**
@@ -283,8 +285,7 @@ class EmailRecipient extends AbstractEntityModelStringId
     /**
      * Set the value of queue
      *
-     * * @API\Input(type="?id")
-     * @param  \GPDEmailManager\Entities\EmailQueue  $queue
+     * @param  EmailQueue  $queue
      *
      * @return  self
      */
@@ -319,7 +320,7 @@ class EmailRecipient extends AbstractEntityModelStringId
         return $this;
     }
 
-        /**
+    /**
      * Get the extern reference to the owner 
      *
      * @return  ?string
