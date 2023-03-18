@@ -35,7 +35,7 @@ class EmailRecipient extends AbstractEntityModelStringId
     protected $email;
 
     /**
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      *
      * @var string
      */
