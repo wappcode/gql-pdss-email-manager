@@ -81,7 +81,7 @@ class EmailRecipient extends AbstractEntityModelStringId
      * @ORM\Column(type="string", length=500, name="owner_code", nullable=true) 
      * @var ?string
      */
-    private $ownerCode;
+    protected $ownerCode;
 
     /**
      * @ORM\ManyToOne(targetEntity="\GPDEmailManager\Entities\EmailQueue", inversedBy="recipients")
