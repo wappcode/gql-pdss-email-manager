@@ -14,7 +14,8 @@ use GPDEmailManager\Library\EmialPassworEncoder;
 /**
  * Send emails
  */
-class EmailProcessQueue {
+class EmailProcessQueue
+{
 
     const PARAM_DELIMITER_START = '|#';
     const PARAM_DELIMITER_END = '#|';
@@ -22,45 +23,44 @@ class EmailProcessQueue {
 
     const DEFAULT_CRON_EXECUTION_PER_HOUR = 12; // Each 5 minutes
 
-    public static function proccessAll(IContextService $context){
+    public static function proccessAll(IContextService $context)
+    {
 
         // Select only the accounts with messages to delivery
         $currentDate = new DateTime();
         $entityManager = $context->getEntityManager();
         $qb = $entityManager->createQueryBuilder()->from(EmailSenderAccount::class, 'senderAccount')
-        ->innerJoin("senderAccount.queues","queue")
-        ->innerJoin("queue.message", "message")
-        ->innerJoin("queue.recipients", "recipient")
-        ->select(array("senderAccount","queue", "message"))
-        ;
+            ->innerJoin("senderAccount.queues", "queue")
+            ->innerJoin("queue.message", "message")
+            ->innerJoin("queue.recipients", "recipient")
+            ->select(array("senderAccount", "queue", "message"));
         $qb->andWhere("recipient.sent = 0")
-        ->andWhere("recipient.status like :status")
-        ->andWhere("recipient.sendingDate <= :currentDate")
-        ->setParameter(":status", EmailRecipient::STATUS_WAITING)
-        ->setParameter(":currentDate", $currentDate->format("Y-m-d H:i"));
+            ->andWhere("recipient.status like :status")
+            ->andWhere("recipient.sendingDate <= :currentDate")
+            ->setParameter(":status", EmailRecipient::STATUS_WAITING)
+            ->setParameter(":currentDate", $currentDate->format("Y-m-d H:i"));
 
         $accounts = $qb->getQuery()->getResult();
 
-        foreach($accounts as $account) {
+        foreach ($accounts as $account) {
             static::processAccount($context, $account);
         }
-        
-
-
     }
-    public static function sendNow(IContextService $context,  EmailRecipient $recipient) {
+    public static function sendNow(IContextService $context,  EmailRecipient $recipient)
+    {
         $account = $recipient->getQueue()->getSenderAccount();
         $totalCanSend = static::getHowManyCanSend($context, $account);
-        if(empty($totalCanSend)) {
+        if (empty($totalCanSend)) {
             throw new Exception("Sending limit");
         }
         static::processRecipient($context, $recipient);
     }
 
 
-    public static function processAccount(IContextService $context,  EmailSenderAccount $account) {
+    public static function processAccount(IContextService $context,  EmailSenderAccount $account)
+    {
         // If the limit per hour has been reached do not send nothing
-        $howManyCanSend =static::getHowManyCanSend($context, $account);
+        $howManyCanSend = static::getHowManyCanSend($context, $account);
         $deliveriesPerHour = $account->getMaxDeliveriesPerHour();
         if (empty($howManyCanSend) || empty($deliveriesPerHour)) {
             return;
@@ -72,7 +72,7 @@ class EmailProcessQueue {
             return;
         }
 
-        $deliveriesPerBlock = $deliveriesPerHour / $executionsPerHour;
+        $deliveriesPerBlock = ceil($deliveriesPerHour / $executionsPerHour);
 
         $deliveriesLimit = min($deliveriesPerBlock, $howManyCanSend);
         if (empty($deliveriesLimit)) {
@@ -80,69 +80,71 @@ class EmailProcessQueue {
         }
         $recipients = static::getAccountRecipients($context, $account, $deliveriesLimit);
         $count = 0;
-        foreach($recipients as $recipient) {
-            if($count++ >= $deliveriesLimit) {
+        foreach ($recipients as $recipient) {
+            if ($count++ >= $deliveriesLimit) {
                 break;
             } else {
                 static::processRecipient($context, $recipient);
             }
         }
-
     }
-    public static function getHowManyCanSend(IContextService $context, EmailSenderAccount $account): int{
+    public static function getHowManyCanSend(IContextService $context, EmailSenderAccount $account): int
+    {
         $currentDate = new DateTime();
         $startDate = $currentDate->format('Y-m-d H:00');
         $endDate = $currentDate->format('Y-m-d H:59');
         $entityManager = $context->getEntityManager();
         $qb = $entityManager->createQueryBuilder()->from(EmailRecipient::class, 'recipient')
-        ->select("COUNT(recipient.id)");
+            ->select("COUNT(recipient.id)");
         $qb->andWhere('recipient.sent = 1')
-        ->andWhere('recipient.sendingDate BETWEEN :startDate AND :endDate')
-        ->setParameter(':startDate', $startDate)
-        ->setParameter(':endDate', $endDate);
+            ->andWhere('recipient.sendingDate BETWEEN :startDate AND :endDate')
+            ->setParameter(':startDate', $startDate)
+            ->setParameter(':endDate', $endDate);
         $result = $qb->getQuery()->getSingleScalarResult();
         $totalSent = intval($result);
         $remaind = $account->getMaxDeliveriesPerHour() - $totalSent;
 
         return max(0, $remaind);
     }
-    protected static function getAccountRecipients(IContextService $context, EmailSenderAccount $account, $limit=1) {
+    protected static function getAccountRecipients(IContextService $context, EmailSenderAccount $account, $limit = 1)
+    {
         $currentDate = new DateTime();
         $entityManager = $context->getEntityManager();
         $qb = $entityManager->createQueryBuilder()->from(EmailRecipient::class, 'recipient')
-        ->innerJoin('recipient.queue', 'queue')
-        ->innerJoin('queue.message', 'message')
-        ->innerJoin('queue.senderAccount', 'senderAccount')
-        ->select(array('recipient', 'queue','message','senderAccount'));
-        
+            ->innerJoin('recipient.queue', 'queue')
+            ->innerJoin('queue.message', 'message')
+            ->innerJoin('queue.senderAccount', 'senderAccount')
+            ->select(array('recipient', 'queue', 'message', 'senderAccount'));
+
         // Here is where deliveries are selected
         $qb->andWhere("recipient.sent = 0")
-        ->andWhere("recipient.status like :status")
-        ->andWhere("recipient.sendingDate <= :currentDate")
-        ->setParameter(":status", EmailRecipient::STATUS_WAITING)
-        ->setParameter(":currentDate", $currentDate->format("Y-m-d H:i"));
+            ->andWhere("recipient.status like :status")
+            ->andWhere("recipient.sendingDate <= :currentDate")
+            ->setParameter(":status", EmailRecipient::STATUS_WAITING)
+            ->setParameter(":currentDate", $currentDate->format("Y-m-d H:i"));
 
         $qb
-        ->andWhere("senderAccount.id = :senderAccountId")
-        ->setParameter(":senderAccountId", $account->getId())
-        ->addOrderBy('recipient.priority','DESC')
-        ->addOrderBy('recipient.sendingDate','ASC')
-        ->setMaxResults($limit);
+            ->andWhere("senderAccount.id = :senderAccountId")
+            ->setParameter(":senderAccountId", $account->getId())
+            ->addOrderBy('recipient.priority', 'DESC')
+            ->addOrderBy('recipient.sendingDate', 'ASC')
+            ->setMaxResults($limit);
 
         $recipients = $qb->getQuery()->getResult();
         return $recipients;
     }
-    
-   
-   
 
-    protected static function processRecipient(IContextService $context, EmailRecipient $recipient) {
+
+
+
+    protected static function processRecipient(IContextService $context, EmailRecipient $recipient)
+    {
         $entityManager = $context->getEntityManager();
         $queue = $recipient->getQueue();
         $account = $queue->getSenderAccount();
         $message = $queue->getMessage();
         $charset = $message->getChartset();
-        $config = static::createConfig($context,$account, $charset);
+        $config = static::createConfig($context, $account, $charset);
         $bodyHtml = static::createBody($recipient);
         $subject = static::createSubject($recipient);
         $email = $recipient->getEmail();
@@ -150,7 +152,7 @@ class EmailProcessQueue {
         $name = !empty($name) ? $name : '';
         $altBody = static::createAltBody($recipient);
         $replayTo = $queue->getReplyTo();
-        $replayTo = !empty($replayTo) ?$replayTo : '';
+        $replayTo = !empty($replayTo) ? $replayTo : '';
         $replayToName = $queue->getReplyToName();
         $replayToName = !empty($replayToName) ? $replayToName  : '';
         $isProduction = $context->isProductionMode();
@@ -162,14 +164,14 @@ class EmailProcessQueue {
         if (empty($senderName)) {
             $senderName = $account->getTitle();
         }
-        $ok = MailerService::send($config,$email, $name, $subject, $bodyHtml, $senderAddress, $senderName, $altBody, $replayTo, $replayToName, $isProduction);
+        $ok = MailerService::send($config, $email, $name, $subject, $bodyHtml, $senderAddress, $senderName, $altBody, $replayTo, $replayToName, $isProduction);
         $status = $ok ? EmailRecipient::STATUS_SENT  : EmailRecipient::STATUS_ERROR;
         $recipient->setSent(true)->setStatus($status);
         $entityManager->flush();
-        
     }
 
-    protected static function createConfig(IContextService $context, EmailSenderAccount $account, $charset='UTF-8') {
+    protected static function createConfig(IContextService $context, EmailSenderAccount $account, $charset = 'UTF-8')
+    {
         $appConfig = $context->getConfig();
         $encriptPassword = $appConfig->get("gpd_email_manager__secret_key");
         $iv = $appConfig->get('gql_email_manager__iv');
@@ -184,13 +186,14 @@ class EmailProcessQueue {
             'secure' => $account->getSecure(),
             'port' => $account->getPort(),
             'charset' => $charset,
-            'test_email_address' =>$testEmail,
+            'test_email_address' => $testEmail,
 
         ];
         return $config;
     }
 
-    protected static function createBody(EmailRecipient $recipient) {
+    protected static function createBody(EmailRecipient $recipient)
+    {
         $body = $recipient->getQueue()->getMessage()->getBody();
         $params = $recipient->getParams();
         if (empty($body)) {
@@ -198,7 +201,8 @@ class EmailProcessQueue {
         }
         return static::adjustMailText($body, $params);
     }
-    protected static function createAltBody(EmailRecipient $recipient) {
+    protected static function createAltBody(EmailRecipient $recipient)
+    {
         $body = $recipient->getQueue()->getMessage()->getPlainTextBody();
         $params = $recipient->getParams();
         if (empty($body)) {
@@ -207,7 +211,8 @@ class EmailProcessQueue {
         return static::adjustMailText($body, $params);
     }
 
-    protected static function  createSubject( EmailRecipient $recipient) {
+    protected static function  createSubject(EmailRecipient $recipient)
+    {
         $subject = $recipient->getQueue()->getSubject();
         $params = $recipient->getParams();
         if (empty($subject)) {
@@ -215,35 +220,34 @@ class EmailProcessQueue {
         }
         return static::adjustMailText($subject, $params);
     }
-    public static function adjustMailText(string $text, array $params): string {
+    public static function adjustMailText(string $text, array $params): string
+    {
         $text = static::repalceParamsInText($text, $params);
         $text = static::removeParamsReferences($text);
         return $text;
     }
 
-    public static function repalceParamsInText(string $text, array $params): string {
+    public static function repalceParamsInText(string $text, array $params): string
+    {
 
         if (empty($params)) {
             return $text;
         }
-        foreach($params as $param) {
-            if(!is_array($param) || count($param) !== 2) {
+        foreach ($params as $param) {
+            if (!is_array($param) || count($param) !== 2) {
                 continue;
             }
             $key = $param[0];
             $value = $param[1] ?? '';
-            $search = static::PARAM_DELIMITER_START.$key.static::PARAM_DELIMITER_END;
-            $text = str_replace($search,$value,$text);
+            $search = static::PARAM_DELIMITER_START . $key . static::PARAM_DELIMITER_END;
+            $text = str_replace($search, $value, $text);
         }
         return $text;
-
     }
 
-    public static function removeParamsReferences(string $text) {
-        $result = preg_replace(static::PARAM_REPLACEMENT_PATTERN," ", $text);
+    public static function removeParamsReferences(string $text)
+    {
+        $result = preg_replace(static::PARAM_REPLACEMENT_PATTERN, " ", $text);
         return $result;
     }
-
-
-
 }
