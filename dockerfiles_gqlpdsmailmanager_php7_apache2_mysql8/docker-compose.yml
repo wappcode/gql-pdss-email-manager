@@ -1,0 +1,40 @@
+version: "3.7"
+services:
+  gqlpdsemail-mysql:
+    container_name: gqlpdsemail-mysql8
+    image: mysql:8.0.28
+    command: --default-authentication-plugin=mysql_native_password
+    restart: "no"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${GQLPDSSEMAIL_DBPASSWORD:-dbpassword}
+    ports:
+      - "${GQLPDSSEMAIL_MYSQL_PORT:-3308}:3306"
+    platform: linux/x86_64
+    volumes:
+      - ~/opt/dockerMysql8.0.28:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 60
+  gqlpdsemail-php:
+    depends_on:
+      gqlpdsemail-mysql:
+        condition: service_healthy
+    container_name: gqlpdsemail-php7.4
+    image: jesusabarcag/php-dev:php7.4
+    volumes:
+      - ..:/var/www/html
+      - ./sites-enabled:/etc/apache2/sites-enabled
+      - ./xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - ./commands:/home/commands
+    ports:
+      - "${GQLPDSSEMAIL_APP_PORT:-8080}:8080"
+    entrypoint: sh -c "/home/commands/run.sh"
+    restart: "no"
+    platform: linux/x86_64
+    environment:
+      - GQLPDSSEMAIL_APP_PORT=${GQLPDSSEMAIL_APP_PORT:-8080}
+      - GQLPDSSEMAIL_DBUSER=${GQLPDSSEMAIL_DBUSER:-root}
+      - GQLPDSSEMAIL_DBPASSWORD=${GQLPDSSEMAIL_DBPASSWORD:-dbpassword}
+      - GQLPDSSEMAIL_DBNAME=${GQLPDSSEMAIL_DBNAME:-gqlpdss_emaildb}
+      - GQLPDSSEMAIL_DBHOST=gqlpdsemail-mysql

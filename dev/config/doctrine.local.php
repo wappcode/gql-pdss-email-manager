@@ -3,9 +3,9 @@ return [
     "driver" => [
         'user'     =>   'root',
         'password' =>   'dbpassword',
-        'dbname'   =>   'gqlpdss_email_manager',
+        'dbname'   =>   'gqlpdss_emaildb',
         'driver'   =>   'pdo_mysql',
-        'host'   =>     '127.0.0.1',
+        'host'   =>     'gqlpdsemail-mysql',
         'charset' =>    'utf8mb4'
     ],
     "entities" => require __DIR__ . "/doctrine.entities.php"
