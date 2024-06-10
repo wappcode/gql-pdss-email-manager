@@ -66,7 +66,7 @@ class EmailSenderAccount  extends AbstractEntityModelStringId
      * Enable implicit TLS encryption
      * Values can be PHPMailer::ENCRYPTION_SMTPS (ssl) or PHPMailer::ENCRYPTION_STARTTLS(tls)
      * @ORM\Column(name="secure", type="string", length=255, nullable=true)
-     * @var string
+     * @var ?string
      */
     protected $secure;
     /**
@@ -251,7 +251,7 @@ class EmailSenderAccount  extends AbstractEntityModelStringId
     /**
      * Get values can be PHPMailer::ENCRYPTION_SMTPS (ssl) or PHPMailer::ENCRYPTION_STARTTLS(tls)
      *
-     * @return  string
+     * @return  ?string
      */
     public function getSecure()
     {
@@ -266,7 +266,7 @@ class EmailSenderAccount  extends AbstractEntityModelStringId
      *
      * @return  self
      */
-    public function setSecure(string $secure = PHPMailer::ENCRYPTION_SMTPS)
+    public function setSecure(?string $secure = PHPMailer::ENCRYPTION_SMTPS)
     {
         $this->secure = $secure;
 

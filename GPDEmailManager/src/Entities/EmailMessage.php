@@ -30,7 +30,7 @@ class EmailMessage extends AbstractEntityModelStringId
     /**
      * @ORM\Column(name="plain_text_body", type="text", nullable=true)
      *
-     * @var string
+     * @var ?string
      */
     protected $plainTextBody;
     /**
