@@ -99,16 +99,14 @@ class GPDEmailManagerModule extends AbstractModule
         $emailRecipientConnection = $this->context->getServiceManager()->get(TypeEmailRecipientConnection::class);
         $emailSenderAccountConnection = $this->context->getServiceManager()->get(TypeEmailSenderAccountConnection::class);
         return [
-            'emailMessageConnection' => GPDFieldFactory::buildFieldConnection($this->context, $emailMessageConnection, EmailMessage::class, EmailMessage::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'emailMessage' => GPDFieldFactory::buildFieldItem($this->context, EmailMessage::class, EmailMessage::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'emailQueueConnection' => GPDFieldFactory::buildFieldConnection($this->context, $emailQueueConnection, EmailQueue::class, EmailQueue::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'emailQueue' => GPDFieldFactory::buildFieldItem($this->context, EmailQueue::class, EmailQueue::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'emailRecipientConnection' => GPDFieldFactory::buildFieldConnection($this->context, $emailRecipientConnection, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'emailRecipient' => GPDFieldFactory::buildFieldItem($this->context, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'emailRecipientConnection' => GPDFieldFactory::buildFieldConnection($this->context, $emailRecipientConnection, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'emailRecipient' => GPDFieldFactory::buildFieldItem($this->context, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'emailSenderAccountConnection' => GPDFieldFactory::buildFieldConnection($this->context, $emailSenderAccountConnection, EmailSenderAccount::class, EmailSenderAccount::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
-            'emailSenderAccount' => GPDFieldFactory::buildFieldItem($this->context, EmailSenderAccount::class, EmailSenderAccount::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'getEmailMessages' => GPDFieldFactory::buildFieldConnection($this->context, $emailMessageConnection, EmailMessage::class, EmailMessage::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'getEmailMessage' => GPDFieldFactory::buildFieldItem($this->context, EmailMessage::class, EmailMessage::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'getEmailQueues' => GPDFieldFactory::buildFieldConnection($this->context, $emailQueueConnection, EmailQueue::class, EmailQueue::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'getEmailQueue' => GPDFieldFactory::buildFieldItem($this->context, EmailQueue::class, EmailQueue::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'getEmailRecipients' => GPDFieldFactory::buildFieldConnection($this->context, $emailRecipientConnection, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'getEmailRecipient' => GPDFieldFactory::buildFieldItem($this->context, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'getEmailSenderAccounts' => GPDFieldFactory::buildFieldConnection($this->context, $emailSenderAccountConnection, EmailSenderAccount::class, EmailSenderAccount::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'getEmailSenderAccount' => GPDFieldFactory::buildFieldItem($this->context, EmailSenderAccount::class, EmailSenderAccount::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
         ];
     }
     function getMutationFields(): array

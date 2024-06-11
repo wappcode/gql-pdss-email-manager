@@ -98,7 +98,7 @@ class EmailMessage extends AbstractEntityModelStringId
 
     /**
      * Get the value of chartset
-     *
+     * Default value UTF-8
      * @return  string
      */
     public function getChartset()
@@ -108,6 +108,7 @@ class EmailMessage extends AbstractEntityModelStringId
 
     /**
      * Set the value of chartset
+     * Default value UTF-8
      *
      * @param  string  $chartset
      *
