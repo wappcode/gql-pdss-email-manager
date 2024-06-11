@@ -285,7 +285,7 @@ class EmailQueue extends AbstractEntityModelStringId
     }
 
     /**
-     * Set the value of recipients
+     * Set the recipients value; recipients are going to be created instead of updated
      *
      * @API\Input(type="?CreateEmailQueueRecipientsInput[]")
      * @param  Collection  $recipients
