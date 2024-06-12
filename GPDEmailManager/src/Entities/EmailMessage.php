@@ -134,7 +134,7 @@ class EmailMessage extends AbstractEntityModelStringId
     /**
      * Set the value of plainTextBody
      *
-     * @param  string  $plainTextBody
+     * @param  ?string  $plainTextBody
      *
      * @return  self
      */

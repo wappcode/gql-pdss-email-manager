@@ -88,7 +88,7 @@ class GPDEmailManagerModule extends AbstractModule
     {
         return [
             'EmailQueue::message' => ResolversEmailQueue::getMessageResolver($proxy = null),
-            'EmailQueue::senderAccount' => ResolversEmailQueue::getMessageResolver($proxy = null),
+            'EmailQueue::senderAccount' => ResolversEmailQueue::getSenderAccountResolver($proxy = null),
             'EmailQueue::recipients' => ResolversEmailQueue::getRecipientsResolver($proxy = null),
             'EmailRecipient::queue' => ResolversEmailRecipient::getQueueResolver($proxy = null),
         ];
