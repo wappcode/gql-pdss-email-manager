@@ -150,12 +150,13 @@ class EmailRecipient extends AbstractEntityModelStringId
 
     /**
      * Get the value of params
+     * Params can be null but this method always return an array
      * @API\Field(type="?GPDEmailManager\Graphql\TypeEmailRecipientParams")
      * @return  array
      */
     public function getParams(): array
     {
-        return $this->params;
+        return $this->params ?? [];
     }
 
     /**

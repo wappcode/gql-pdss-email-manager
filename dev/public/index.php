@@ -13,8 +13,8 @@ $cacheDir = __DIR__ . "/../data/DoctrineORMModule";
 $enviroment = getenv("APP_ENV");
 $serviceManager = new ServiceManager();
 $context = new ContextService($serviceManager);
-$context->setConfigFile($configFile);
-$context->setCacheDir($cacheDir);
+$context->setDoctrineConfigFile($configFile);
+$context->setDoctrineCacheDir($cacheDir);
 $router = new AppRouter();
 $app = new GPDApp($context, $router, $enviroment);
 $app->addModules([
