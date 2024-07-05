@@ -13,6 +13,8 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 
+use function GPDCore\Functions\removeSpecialChars;
+
 class ImportRecipientsFromExcel
 {
     /**
@@ -106,6 +108,7 @@ class ImportRecipientsFromExcel
                 for ($col = 1; $col <= $highestColumnIndex; ++$col) {
                     $titleIndex = $col - 1;
                     $title = $titles[$titleIndex] ?? '';
+                    $title = removeSpecialChars($title, '_');
                     if (empty($title)) {
                         continue;
                     }
