@@ -1,6 +1,6 @@
 {
   "name": "wappcode/gql-pdss-email-manager",
-  "version": "2.1.3",
+  "version": "2.2.0",
   "description": "Modulo para administrar envíos de correos electrónicos",
   "type": "library",
   "license": "MIT",
