@@ -14,6 +14,7 @@ use GPDEmailManager\Graphql\FieldResumeQueue;
 use GPDEmailManager\Graphql\TypeEmailQueueEdge;
 use GPDEmailManager\Entities\EmailSenderAccount;
 use GPDEmailManager\Graphql\FieldDeleteCanceledQueueRecipients;
+use GPDEmailManager\Graphql\FieldForwardEmailRecipient;
 use GPDEmailManager\Graphql\FieldUpdateQueue;
 use GPDEmailManager\Graphql\ResolversEmailQueue;
 use GPDEmailManager\Graphql\TypeEmailMessageEdge;
@@ -29,6 +30,7 @@ use GPDEmailManager\Graphql\TypeEmailSenderAccountSecure;
 use GPDEmailManager\Graphql\TypeEmailQueueRecipientsInput;
 use GPDEmailManager\Graphql\TypeEmailSenderAccountPassword;
 use GPDEmailManager\Graphql\TypeEmailSenderAccountConnection;
+use GPDEmailManager\Graphql\TypeForwardEmailRecipientInput;
 
 class GPDEmailManagerModule extends AbstractModule
 {
@@ -66,6 +68,9 @@ class GPDEmailManagerModule extends AbstractModule
                 },
                 TypeEmailQueueRecipientsInput::class => function ($sm) {
                     return new TypeEmailQueueRecipientsInput($this->context);
+                },
+                TypeForwardEmailRecipientInput::class => function ($sm) {
+                    return new TypeForwardEmailRecipientInput($this->context);
                 }
             ],
             'aliases' => [
@@ -82,6 +87,7 @@ class GPDEmailManagerModule extends AbstractModule
                 TypeEmailSenderAccountPassword::NAME => TypeEmailSenderAccountPassword::class,
                 TypeEmailSenderAccountSecure::NAME => TypeEmailSenderAccountSecure::class,
                 TypeEmailQueueRecipientsInput::NAME => TypeEmailQueueRecipientsInput::class,
+                TypeForwardEmailRecipientInput::NAME => TypeForwardEmailRecipientInput::class,
             ]
         ];
     }
@@ -127,6 +133,7 @@ class GPDEmailManagerModule extends AbstractModule
             'createEmailRecipient'      => GPDFieldFactory::buildFieldCreate($this->context, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
             'updateEmailRecipient'      => GPDFieldFactory::buildFieldUpdate($this->context, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
             'deleteEmailRecipient'      => GPDFieldFactory::buildFieldDelete($this->context, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
+            'forwardEmailRecipient'        => FieldForwardEmailRecipient::get($this->context, $this->defaultProxy),
             'createEmailSenderAccount'  => GPDFieldFactory::buildFieldCreate($this->context, EmailSenderAccount::class, EmailSenderAccount::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
             'updateEmailSenderAccount'  => GPDFieldFactory::buildFieldUpdate($this->context, EmailSenderAccount::class, EmailSenderAccount::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
             'deleteEmailSenderAccount'  => GPDFieldFactory::buildFieldDelete($this->context, EmailSenderAccount::class, EmailSenderAccount::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
