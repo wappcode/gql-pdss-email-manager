@@ -11,11 +11,9 @@ use GPDEmailManager\Graphql\FieldPauseQueue;
 use GPDEmailManager\Graphql\FieldCancelQueue;
 use GPDEmailManager\Graphql\FieldCreateQueue;
 use GPDEmailManager\Graphql\FieldResumeQueue;
+use GPDEmailManager\Graphql\FieldUpdateQueue;
 use GPDEmailManager\Graphql\TypeEmailQueueEdge;
 use GPDEmailManager\Entities\EmailSenderAccount;
-use GPDEmailManager\Graphql\FieldDeleteCanceledQueueRecipients;
-use GPDEmailManager\Graphql\FieldForwardEmailRecipient;
-use GPDEmailManager\Graphql\FieldUpdateQueue;
 use GPDEmailManager\Graphql\ResolversEmailQueue;
 use GPDEmailManager\Graphql\TypeEmailMessageEdge;
 use GPDEmailManager\Graphql\TypeEmailRecipientEdge;
@@ -23,14 +21,16 @@ use GPDEmailManager\Graphql\ResolversEmailRecipient;
 use GPDEmailManager\Graphql\TypeEmailQueueConnection;
 use GPDEmailManager\Graphql\TypeEmailRecipientParams;
 use GPDEmailManager\Graphql\TypeEmailRecipientStatus;
+use GPDEmailManager\Graphql\FieldForwardEmailRecipient;
 use GPDEmailManager\Graphql\TypeEmailMessageConnection;
 use GPDEmailManager\Graphql\TypeEmailSenderAccountEdge;
 use GPDEmailManager\Graphql\TypeEmailRecipientConnection;
 use GPDEmailManager\Graphql\TypeEmailSenderAccountSecure;
 use GPDEmailManager\Graphql\TypeEmailQueueRecipientsInput;
+use GPDEmailManager\Graphql\TypeEmailRecipientForwardInput;
 use GPDEmailManager\Graphql\TypeEmailSenderAccountPassword;
 use GPDEmailManager\Graphql\TypeEmailSenderAccountConnection;
-use GPDEmailManager\Graphql\TypeEmailRecipientForwardInput;
+use GPDEmailManager\Graphql\FieldDeleteCanceledQueueRecipients;
 
 class GPDEmailManagerModule extends AbstractModule
 {

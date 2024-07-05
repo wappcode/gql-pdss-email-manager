@@ -31,7 +31,7 @@ class FieldForwardEmailRecipient
                     'type' => Type::nonNull(Type::id())
                 ],
                 'input' => [
-                    'type' => Type::nonNull($types->getInput(TypeEmailRecipientForwardInput::NAME))
+                    'type' => Type::nonNull($serviceManager->get(TypeEmailRecipientForwardInput::NAME))
                 ]
 
             ],
