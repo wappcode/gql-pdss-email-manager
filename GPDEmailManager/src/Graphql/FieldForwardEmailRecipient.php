@@ -30,27 +30,10 @@ class FieldForwardEmailRecipient
                 'id' => [
                     'type' => Type::nonNull(Type::id())
                 ],
-                'name' => [
-                    'type' => Type::string()
-                ],
-                'email' => [
-                    'type' => Type::nonNull(Type::string())
-                ],
-                'sendingDate' => [
-                    'type' => Type::nonNull($serviceManager->get(DateTimeInterface::class))
-                ],
-                'status' => [
-                    'type' => Type::nonNull($serviceManager->get(TypeEmailRecipientStatus::NAME))
-                ],
-                'priority' => [
-                    'type' => Type::nonNull(Type::int()),
-                    'defaultValue' => EmailRecipient::PRIORITY_LOW
-                ],
-                'isOwnerReference' => [
-                    'type' => Type::nonNull(Type::boolean()),
-                    'default' => false,
-                    'description' => 'Indicates if the record must have the owner code. Only one record per queue can have a specific owner code. If it is set to true the older record will update de owner code to null. All of this do not apply if the source record do not have an owner code'
+                'input' => [
+                    'type' => Type::nonNull($types->getInput(TypeForwardEmailRecipientInput::NAME))
                 ]
+
             ],
             'resolve' => $proxyResolve
         ];
@@ -61,12 +44,13 @@ class FieldForwardEmailRecipient
         return function ($root, $args, IContextService $context, $info) {
             $entityManager = $context->getEntityManager();
             $id = $args["id"];
-            $email = $args["email"];
-            $name = $args["name"] ?? null;
-            $sendingDate = $args["sendingDate"];
-            $status = $args["status"];
-            $priority = $args["priority"];
-            $isOwnerReference = $args["isOwnerReference"] ?? false;
+            $input = $args["input"];
+            $email = $input["email"];
+            $name = $input["name"] ?? null;
+            $sendingDate = $input["sendingDate"];
+            $status = $input["status"];
+            $priority = $input["priority"];
+            $isOwnerReference = $input["isOwnerReference"] ?? false;
             $emailRecipient = $entityManager->find(EmailRecipient::class, $id);
             if (!($emailRecipient instanceof EmailRecipient)) {
                 throw new GQLException("The recipient doesn't exist", 400);

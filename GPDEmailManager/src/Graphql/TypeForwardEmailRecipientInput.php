@@ -20,9 +20,6 @@ class TypeForwardEmailRecipientInput extends InputObjectType
         $config = [
             'name' => static::NAME,
             'fields' => [
-                'id' => [
-                    'type' => Type::nonNull(Type::id())
-                ],
                 'name' => [
                     'type' => Type::string()
                 ],
