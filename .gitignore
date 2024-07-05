@@ -5,3 +5,4 @@ vendor/*
 dev/data/*
 !dev/data/.gitkeep
 .phpunit.result.cache
+~$*

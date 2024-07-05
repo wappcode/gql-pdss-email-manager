@@ -47,6 +47,9 @@ class EmailRecipient extends AbstractEntityModelStringId
      */
     protected $priority;
     /**
+     * The params type is an array of 2 string key and value
+     * Expected value example : [ ["key1", "value1"], ["key2", "value2"] ]
+     * @API\Input(type="?GPDEmailManager\Graphql\TypeEmailRecipientParams")
      * @ORM\Column(name="params", type="json", nullable=true)
      * @var array
      */
@@ -151,6 +154,9 @@ class EmailRecipient extends AbstractEntityModelStringId
     /**
      * Get the value of params
      * Params can be null but this method always return an array
+     * The params type is an array of 2 string key and value
+     * Expected value example : [ ["key1", "value1"], ["key2", "value2"] ]
+     * @API\Input(type="?GPDEmailManager\Graphql\TypeEmailRecipientParams")
      * @API\Field(type="?GPDEmailManager\Graphql\TypeEmailRecipientParams")
      * @return  array
      */
@@ -161,6 +167,9 @@ class EmailRecipient extends AbstractEntityModelStringId
 
     /**
      * Set the value of params
+     * The params type is an array of 2 string key and value
+     * Expected value example : [ ["key1", "value1"], ["key2", "value2"] ]
+     * @API\Input(type="?GPDEmailManager\Graphql\TypeEmailRecipientParams")
      * @API\Input(type="?GPDEmailManager\Graphql\TypeEmailRecipientParams")
      * @param  array  $params
      *
