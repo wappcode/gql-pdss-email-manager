@@ -76,10 +76,13 @@ class ImportRecipientsFromExcel
             $val = $cell->getValue();
             $titles[] = trim($val);
         }
-        $lowerTitles = array_map('strtolower', $titles);
-        $emailIndex = array_search('email', $lowerTitles); // valid values (email, Email, EMAIL)
-        $nameIndex = array_search('name', $lowerTitles); // valid values (name, Name, NAME)
-        $ownerCodeIndex = array_search('ownercode', $lowerTitles); // valid values (ownercode, OwnerCode, OWNERCODE, ownerCode)
+        // Da formato al nombre de los titulos de los parámetros minusculas y sin caracteres especiales estos ultimos son reemplazados por _
+        $formatedTitles = array_map(function ($titleValue) {
+            return removeSpecialChars(strtolower($titleValue), "_");
+        }, $titles);
+        $emailIndex = array_search('email', $formatedTitles); // valid values (email, Email, EMAIL)
+        $nameIndex = array_search('name', $formatedTitles); // valid values (name, Name, NAME)
+        $ownerCodeIndex = array_search('ownercode', $formatedTitles); // valid values (ownercode, OwnerCode, OWNERCODE, ownerCode)
         if ($emailIndex === false) {
             throw new Exception('Email column is required');
         }
@@ -107,8 +110,7 @@ class ImportRecipientsFromExcel
                 $params = [];
                 for ($col = 1; $col <= $highestColumnIndex; ++$col) {
                     $titleIndex = $col - 1;
-                    $title = $titles[$titleIndex] ?? '';
-                    $title = removeSpecialChars($title, '_');
+                    $title = $formatedTitles[$titleIndex] ?? '';
                     if (empty($title)) {
                         continue;
                     }
