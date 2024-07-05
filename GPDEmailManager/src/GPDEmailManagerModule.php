@@ -13,6 +13,7 @@ use GPDEmailManager\Graphql\FieldCreateQueue;
 use GPDEmailManager\Graphql\FieldResumeQueue;
 use GPDEmailManager\Graphql\TypeEmailQueueEdge;
 use GPDEmailManager\Entities\EmailSenderAccount;
+use GPDEmailManager\Graphql\FieldDeleteCanceledQueueRecipients;
 use GPDEmailManager\Graphql\FieldUpdateQueue;
 use GPDEmailManager\Graphql\ResolversEmailQueue;
 use GPDEmailManager\Graphql\TypeEmailMessageEdge;
@@ -122,6 +123,7 @@ class GPDEmailManagerModule extends AbstractModule
             'cancelEmailQueue'          => FieldCancelQueue::get($this->context, $this->defaultProxy),
             'resumeEmailQueue'          => FieldResumeQueue::get($this->context, $this->defaultProxy),
             'pauseEmailQueue'           => FieldPauseQueue::get($this->context, $this->defaultProxy),
+            'deleteCanceledEmailQueueRecipients' => FieldDeleteCanceledQueueRecipients::get($this->context, $this->defaultProxy),
             'createEmailRecipient'      => GPDFieldFactory::buildFieldCreate($this->context, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
             'updateEmailRecipient'      => GPDFieldFactory::buildFieldUpdate($this->context, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
             'deleteEmailRecipient'      => GPDFieldFactory::buildFieldDelete($this->context, EmailRecipient::class, EmailRecipient::RELATIONS_MANY_TO_ONE, $this->defaultProxy),
