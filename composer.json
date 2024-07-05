@@ -1,6 +1,6 @@
 {
   "name": "wappcode/gql-pdss-email-manager",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Modulo para administrar envíos de correos electrónicos",
   "type": "library",
   "license": "MIT",
@@ -11,10 +11,10 @@
   },
   "require": {
     "wappcode/gqlpdss": "^4.0",
-    "phpmailer/phpmailer": "^6.6",
-    "phpoffice/phpspreadsheet": "^1.29"
+    "phpmailer/phpmailer": "^6.6"
   },
   "require-dev": {
+    "phpoffice/phpspreadsheet": "^1.29",
     "phpunit/phpunit": "^9.6",
     "wappcode/graphql-basic-client": "^1.0"
   },
