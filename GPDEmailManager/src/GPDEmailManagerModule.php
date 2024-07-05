@@ -30,7 +30,7 @@ use GPDEmailManager\Graphql\TypeEmailSenderAccountSecure;
 use GPDEmailManager\Graphql\TypeEmailQueueRecipientsInput;
 use GPDEmailManager\Graphql\TypeEmailSenderAccountPassword;
 use GPDEmailManager\Graphql\TypeEmailSenderAccountConnection;
-use GPDEmailManager\Graphql\TypeForwardEmailRecipientInput;
+use GPDEmailManager\Graphql\TypeEmailRecipientForwardInput;
 
 class GPDEmailManagerModule extends AbstractModule
 {
@@ -69,8 +69,8 @@ class GPDEmailManagerModule extends AbstractModule
                 TypeEmailQueueRecipientsInput::class => function ($sm) {
                     return new TypeEmailQueueRecipientsInput($this->context);
                 },
-                TypeForwardEmailRecipientInput::class => function ($sm) {
-                    return new TypeForwardEmailRecipientInput($this->context);
+                TypeEmailRecipientForwardInput::class => function ($sm) {
+                    return new TypeEmailRecipientForwardInput($this->context);
                 }
             ],
             'aliases' => [
@@ -87,7 +87,7 @@ class GPDEmailManagerModule extends AbstractModule
                 TypeEmailSenderAccountPassword::NAME => TypeEmailSenderAccountPassword::class,
                 TypeEmailSenderAccountSecure::NAME => TypeEmailSenderAccountSecure::class,
                 TypeEmailQueueRecipientsInput::NAME => TypeEmailQueueRecipientsInput::class,
-                TypeForwardEmailRecipientInput::NAME => TypeForwardEmailRecipientInput::class,
+                TypeEmailRecipientForwardInput::NAME => TypeEmailRecipientForwardInput::class,
             ]
         ];
     }

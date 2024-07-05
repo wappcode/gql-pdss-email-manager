@@ -8,11 +8,11 @@ use GPDCore\Library\IContextService;
 use GPDEmailManager\Entities\EmailRecipient;
 use GraphQL\Type\Definition\InputObjectType;
 
-class TypeForwardEmailRecipientInput extends InputObjectType
+class TypeEmailRecipientForwardInput extends InputObjectType
 {
 
 
-    const NAME = 'ForwardEmailRecipientInput';
+    const NAME = 'EmailRecipientForwardInput';
 
     public function __construct(IContextService $context)
     {
