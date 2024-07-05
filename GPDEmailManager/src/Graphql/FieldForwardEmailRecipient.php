@@ -64,7 +64,7 @@ class FieldForwardEmailRecipient
                 }
                 $entityManager->persist($newRecipient);
                 $entityManager->flush();
-                $result = GeneralDoctrineUtilities::getArrayEntityById($entityManager, EmailRecipient::class, $emailRecipient->getId());
+                $result = GeneralDoctrineUtilities::getArrayEntityById($entityManager, EmailRecipient::class, $newRecipient->getId());
                 $entityManager->commit();
                 return $result;
             } catch (Exception $e) {
